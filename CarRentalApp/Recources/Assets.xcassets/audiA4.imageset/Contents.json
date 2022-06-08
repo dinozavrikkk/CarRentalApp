@@ -1,0 +1,16 @@
+{
+  "images" : [
+    {
+      "filename" : "d974e763d1b8c4ce1e7ce777aa3ae44e.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true,
+    "template-rendering-intent" : "original"
+  }
+}

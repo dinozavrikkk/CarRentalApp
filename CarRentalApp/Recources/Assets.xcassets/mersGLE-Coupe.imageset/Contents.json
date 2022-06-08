@@ -1,0 +1,16 @@
+{
+  "images" : [
+    {
+      "filename" : "image.MQ6.2.2x.20210728104816.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true,
+    "template-rendering-intent" : "original"
+  }
+}
