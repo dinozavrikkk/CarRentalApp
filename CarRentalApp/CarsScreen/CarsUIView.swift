@@ -1,9 +1,3 @@
-//
-//  CarsUIView.swift
-//  CarRentalApp
-//
-//  Created by admin on 09.05.2022.
-//
 
 import UIKit
 
@@ -46,7 +40,6 @@ final class CarsUIView: UIView {
         super.init(frame: frame)
         self.backgroundColor = .white
         
-        
         addSubviews()
         preconfigureSubviews()
         setupConstraints()
@@ -57,11 +50,7 @@ final class CarsUIView: UIView {
     }
     
     private func addSubviews() {
-        addSubview(brandsLabel)
-        addSubview(brandsCollectionView)
-        addSubview(carsTableView)
-        addSubview(conteinerForStatusBar)
-        
+        [brandsLabel, brandsCollectionView, carsTableView, conteinerForStatusBar].forEach{ subview in addSubview(subview) }
     }
     
     private func preconfigureSubviews() {
@@ -69,46 +58,34 @@ final class CarsUIView: UIView {
     }
     
     private func setupConstraints() {
-        brandsLabelConstraints()
-        brandsCollectionViewConstraints()
-        carsTableViewConstraints()
-        conteinerForStatusBarConstraints()
-    }
-    
-    private func conteinerForStatusBarConstraints() {
+        
         NSLayoutConstraint.activate([
             conteinerForStatusBar.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
             conteinerForStatusBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             conteinerForStatusBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
             conteinerForStatusBar.heightAnchor.constraint(equalToConstant: 35)
         ])
-    }
-    
-    private func carsTableViewConstraints() {
+        
         NSLayoutConstraint.activate([
             carsTableView.topAnchor.constraint(equalTo: brandsLabel.bottomAnchor, constant: 142),
             carsTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
             carsTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
             carsTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50)
         ])
-    }
-    
-    private func brandsCollectionViewConstraints() {
+        
         NSLayoutConstraint.activate([
             brandsCollectionView.topAnchor.constraint(equalTo: brandsLabel.bottomAnchor, constant: 9),
             brandsCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
             brandsCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
             brandsCollectionView.heightAnchor.constraint(equalToConstant: 80)
         ])
-    }
-    
-    private func brandsLabelConstraints() {
+        
         NSLayoutConstraint.activate([
             brandsLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 85),
             brandsLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
             brandsLabel.heightAnchor.constraint(equalToConstant: 30)
         ])
+        
     }
-    
-    
+
 }

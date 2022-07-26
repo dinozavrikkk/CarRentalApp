@@ -1,9 +1,3 @@
-//
-//  RecentHistoryViewController.swift
-//  CarRentalApp
-//
-//  Created by admin on 09.05.2022.
-//
 
 import UIKit
 
@@ -11,6 +5,7 @@ class RecentHistoryViewController: UIViewController {
 
     private let historyView = RecentHistoryUIView()
     private var dataProviderHistory: HistoryDataProvider
+    private var historyClass: DataModelHistoryCarsTable?
     
     init(dataProviderHistory: HistoryDataProvider) {
         self.dataProviderHistory = dataProviderHistory
@@ -29,6 +24,7 @@ class RecentHistoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         historyView.historyTableView.register(RecentHistoryTableViewCell.self, forCellReuseIdentifier: "RecentHistoryTableViewCell")
         historyView.historyTableView.rowHeight = UITableView.automaticDimension
         historyView.historyTableView.separatorStyle = .none
@@ -36,7 +32,13 @@ class RecentHistoryViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        historyClass = UserDefaultsManager.receiveUserData()
         historyView.historyTableView.reloadData()
+        
+        if historyView.historyTableView.numberOfRows(inSection: 0) > 0 {
+            historyView.hidingSign()
+        }
     }
     
 }
@@ -44,12 +46,15 @@ class RecentHistoryViewController: UIViewController {
 extension RecentHistoryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dataProviderHistory.numberOfRowsInSection()
+        return historyClass?.carHistoryTable.count ?? 0
+//        dataProviderHistory.numberOfRowsInSection()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RecentHistoryTableViewCell", for: indexPath) as? RecentHistoryTableViewCell
-        cell?.update(dataModelHistory: dataProviderHistory.getCar(for: indexPath))
-        return cell!
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecentHistoryTableViewCell", for: indexPath) as? RecentHistoryTableViewCell,
+              let carsTableForHistory = historyClass?.carHistoryTable[indexPath.row] else { return UITableViewCell() }
+        cell.update(dataModelHistory: carsTableForHistory)
+//        cell?.update(dataModelHistory: dataProviderHistory.getCar(for: indexPath))
+        return cell
     }
 }

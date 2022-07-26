@@ -1,9 +1,3 @@
-//
-//  Data.swift
-//  CarRentalApp
-//
-//  Created by admin on 18.05.2022.
-//
 
 import Foundation
 import UIKit
@@ -56,6 +50,7 @@ struct BackendDataModels {
         BackendCarsModel(stamp: "Porsche", model: "Macan", price: "100", infoAboutCar: "macaannn", carPhoto: UIImage(named: "porscheMacan")!, miniPhoto: UIImage(named: "porshe")!, rentalDays: "1"),
         BackendCarsModel(stamp: "Porsche", model: "Panamera", price: "115", infoAboutCar: "panameraaaa", carPhoto: UIImage(named: "porschePanamera")!, miniPhoto: UIImage(named: "porshe")!, rentalDays: "1")
     ]
+    
 }
 
 

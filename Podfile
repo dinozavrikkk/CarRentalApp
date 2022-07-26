@@ -7,7 +7,6 @@ target 'CarRentalApp' do
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
-  pod 'Firebase/Analytics'
   pod 'Firebase/Firestore'
   # Pods for CarRentalApp
 

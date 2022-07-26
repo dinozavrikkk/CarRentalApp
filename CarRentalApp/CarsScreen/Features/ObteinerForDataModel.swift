@@ -1,9 +1,3 @@
-//
-//  ObteinerForDataModel.swift
-//  CarRentalApp
-//
-//  Created by admin on 18.05.2022.
-//
 
 import Foundation
 
@@ -24,9 +18,5 @@ struct ObteinerForDataModel {
         }
         return DataModelCarsInTable(carsInTable: cars)
     }
-    
-//    func transform(backendCar: BackendCarsModel) -> CarsTable {
-//        return CarsTable(stamp: backendCar.stamp, model: backendCar.model, price: backendCar.price, infoAboutCar: backendCar.infoAboutCar, carPhoto: backendCar.carPhoto)
-//    }
     
 }

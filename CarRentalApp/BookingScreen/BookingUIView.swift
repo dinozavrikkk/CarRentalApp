@@ -1,17 +1,9 @@
-//
-//  BookingUIView.swift
-//  CarRentalApp
-//
-//  Created by admin on 13.05.2022.
-//
 
 import UIKit
 
 final class BookingUIView: UIView {
-
-    weak var delegateBooking: BookingButtonsProtocol?
     
-    lazy var bigImageCar: UIImageView = {
+    private(set) lazy var bigImageCar: UIImageView = {
        let image = UIImageView()
         image.image = UIImage(named: "bmwM3")
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -133,6 +125,7 @@ final class BookingUIView: UIView {
         return textView
     }()
     
+    weak var delegateBooking: BookingButtonsProtocol?
     private let historyDataProvider: HistoryDataProvider
     
     init(historyDataProvider: HistoryDataProvider) {
@@ -153,44 +146,28 @@ final class BookingUIView: UIView {
     }
     
     private func setupConstraints() {
-        bigImageCarConstraints()
-        conteinerForImageConstraints()
-        upperVerticalStackViewConstraints()
-        bottomHorizontalStackViewConstraints()
-        bookButtonConstrasints()
-        counterButtonConstraints()
-        conteinerForStatusBarConstraints()
-        textViewConstraints()
-    }
-    
-    private func textViewConstraints() {
+        
         NSLayoutConstraint.activate([
             infoAboutCarTextView.topAnchor.constraint(equalTo: upperVerticalStackView.bottomAnchor, constant: 15),
             infoAboutCarTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             infoAboutCarTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             infoAboutCarTextView.heightAnchor.constraint(equalToConstant: 165)
         ])
-    }
         
-    private func conteinerForStatusBarConstraints() {
         NSLayoutConstraint.activate([
             conteinerForStatusBar.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
             conteinerForStatusBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             conteinerForStatusBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
             conteinerForStatusBar.heightAnchor.constraint(equalToConstant: 35)
         ])
-    }
-    
-    private func counterButtonConstraints() {
+        
         NSLayoutConstraint.activate([
             counterButton.topAnchor.constraint(equalTo: upperVerticalStackView.bottomAnchor, constant: 195),
             counterButton.leadingAnchor.constraint(equalTo: conteinerForInfo.leadingAnchor, constant: 130),
             counterButton.heightAnchor.constraint(equalToConstant: 50),
             counterButton.widthAnchor.constraint(equalToConstant: 50)
         ])
-    }
-    
-    private func bookButtonConstrasints() {
+        
         NSLayoutConstraint.activate([
             bookButton.topAnchor.constraint(equalTo: conteinerForInfo.topAnchor, constant: 380),
             bookButton.leadingAnchor.constraint(equalTo: conteinerForInfo.leadingAnchor, constant: 230),
@@ -198,27 +175,21 @@ final class BookingUIView: UIView {
             bookButton.heightAnchor.constraint(equalToConstant: 50),
             bookButton.widthAnchor.constraint(equalToConstant: 160)
         ])
-    }
-    
-    private func bottomHorizontalStackViewConstraints() {
+        
         NSLayoutConstraint.activate([
             bottomHorizontalStackView.topAnchor.constraint(equalTo: upperVerticalStackView.bottomAnchor, constant: 255),
             bottomHorizontalStackView.leadingAnchor.constraint(equalTo: conteinerForInfo.leadingAnchor, constant: 22),
             bottomHorizontalStackView.widthAnchor.constraint(equalToConstant: 150),
             bottomHorizontalStackView.heightAnchor.constraint(equalToConstant: 50)
         ])
-    }
-    
-    private func upperVerticalStackViewConstraints() {
+        
         NSLayoutConstraint.activate([
             upperVerticalStackView.topAnchor.constraint(equalTo: conteinerForInfo.topAnchor, constant: 28),
             upperVerticalStackView.leadingAnchor.constraint(equalTo: conteinerForInfo.leadingAnchor, constant: 22),
             upperVerticalStackView.trailingAnchor.constraint(equalTo: conteinerForInfo.trailingAnchor, constant: -100),
             upperVerticalStackView.heightAnchor.constraint(equalToConstant: 105)
         ])
-    }
-    
-    private func bigImageCarConstraints() {
+        
         NSLayoutConstraint.activate([
             bigImageCar.topAnchor.constraint(equalTo: self.topAnchor, constant: 145),
             bigImageCar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 34),
@@ -226,15 +197,14 @@ final class BookingUIView: UIView {
             bigImageCar.heightAnchor.constraint(equalToConstant: 207),
             bigImageCar.widthAnchor.constraint(equalToConstant: 360)
         ])
-    }
-    
-    private func conteinerForImageConstraints() {
+        
         NSLayoutConstraint.activate([
             conteinerForInfo.topAnchor.constraint(equalTo: bigImageCar.bottomAnchor, constant: 30),
             conteinerForInfo.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             conteinerForInfo.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
             conteinerForInfo.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 20)
         ])
+        
     }
     
     @objc private func counterButtonDidTap(_ sender: UIButton) {

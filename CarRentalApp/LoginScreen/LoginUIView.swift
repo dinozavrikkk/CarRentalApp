@@ -1,16 +1,8 @@
-//
-//  WelcomeUIView.swift
-//  CarRentalApp
-//
-//  Created by admin on 07.05.2022.
-//
 
 import UIKit
 
-final class LoginUIView: UIView, UITextFieldDelegate {
-    
-    weak var delegateWelcome: LoginScreenProtocol?
-    
+final class LoginUIView: UIView {
+      
     private lazy var ellipse: UIView = {
        let view = UIView()
         view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
@@ -133,13 +125,6 @@ final class LoginUIView: UIView, UITextFieldDelegate {
         return button
     }()
     
-    private lazy var scrollView: UIScrollView = {
-       let scroll = UIScrollView()
-        scroll.backgroundColor = .white
-        scroll.translatesAutoresizingMaskIntoConstraints = false
-        return scroll
-    }()
-    
     private lazy var contentView: UIView = {
        let contentView = UIView()
         contentView.backgroundColor = .white
@@ -147,16 +132,18 @@ final class LoginUIView: UIView, UITextFieldDelegate {
         return contentView
     }()
     
+    private lazy var contentViewHeightConstraint = contentView.heightAnchor.constraint(equalTo: self.heightAnchor)
+    
+    weak var delegateWelcome: LoginScreenProtocol?
+    private var keyboardIsVisible = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.backgroundColor = .white
         
-        addSubviews()
-//        self.addSubview(scrollView)
-//        scrollView.addSubview(contentView)
-//        addSubviewToContentView()
-        //preconfigureSubviews()
+        addSubview(contentView)
+        addSubviewsToContentView()
         setupConstraints()
         setupDelegate()
         registerKeybordNotification()
@@ -166,34 +153,110 @@ final class LoginUIView: UIView, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    private func addSubviewToContentView() {
-//        [ellipse, whiteCar, conteinerView, signUpLabel, conteinerForEmail, conteinerForPassword, emailImage, emailTextField, passwordImage, passwordTextField, signUpButton, haveAccLabel, signInButton].forEach{ subview in contentView.addSubview(subview) }
-//    }
-//
-    private func addSubviews() {
-        [ellipse, whiteCar, conteinerView, signUpLabel, conteinerForEmail, conteinerForPassword, emailImage, emailTextField, passwordImage, passwordTextField, signUpButton, haveAccLabel, signInButton].forEach{ subview in addSubview(subview) }
+    private func addSubviewsToContentView() {
+        [ellipse, whiteCar, conteinerView, signUpLabel, conteinerForEmail, conteinerForPassword, emailImage, emailTextField, passwordImage, passwordTextField, signUpButton, haveAccLabel, signInButton].forEach{ subview in contentView.addSubview(subview) }
     }
     
-//    private func preconfigureSubviews() {
-//        subviews.forEach{ subview in subview.translatesAutoresizingMaskIntoConstraints = false }
-//    }
-    
     private func setupConstraints() {
-//        scrollViewConstraints()
-//        contentViewConstraints()
-        ellipseConstraints()
-        whiteCarConstraints()
-        conteinerConstraints()
-        signUpLabelConstraints()
-        conteinerForEmailConstraints()
-        conteinerForPasswordConstraints()
-        emailImageConstraints()
-        emailTextFieldConstraints()
-        passwordImageConstraints()
-        passwordTextFieldConstraints()
-        signUpButtonConstraints()
-        haveAccLabelConstraints()
-        signInButtonConstraints()
+        
+        NSLayoutConstraint.activate([
+            contentView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            contentView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            contentView.widthAnchor.constraint(equalTo: self.widthAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            signInButton.topAnchor.constraint(equalTo: haveAccLabel.bottomAnchor, constant: 5),
+            signInButton.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 140),
+            signInButton.heightAnchor.constraint(equalToConstant: 18)
+        ])
+        
+        NSLayoutConstraint.activate([
+            haveAccLabel.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 55),
+            haveAccLabel.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 105),
+            haveAccLabel.heightAnchor.constraint(equalToConstant: 18)
+        ])
+        
+        NSLayoutConstraint.activate([
+            signUpButton.topAnchor.constraint(equalTo: conteinerView.topAnchor, constant: 250),
+            signUpButton.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 24),
+            signUpButton.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -24),
+            signUpButton.heightAnchor.constraint(equalToConstant: 45),
+            signUpButton.widthAnchor.constraint(equalToConstant: 315)
+        ])
+        
+        NSLayoutConstraint.activate([
+            passwordTextField.topAnchor.constraint(equalTo: conteinerForPassword.topAnchor, constant: 14),
+            passwordTextField.leadingAnchor.constraint(equalTo: conteinerForPassword.leadingAnchor, constant: 60),
+            passwordTextField.trailingAnchor.constraint(equalTo: conteinerForPassword.trailingAnchor, constant: -24),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 18)
+        ])
+        
+        NSLayoutConstraint.activate([
+            passwordImage.topAnchor.constraint(equalTo: conteinerForPassword.topAnchor, constant: 11),
+            passwordImage.leadingAnchor.constraint(equalTo: conteinerForPassword.leadingAnchor, constant: 23)
+        ])
+        
+        NSLayoutConstraint.activate([
+            emailTextField.topAnchor.constraint(equalTo: conteinerForEmail.topAnchor, constant: 14),
+            emailTextField.leadingAnchor.constraint(equalTo: conteinerForEmail.leadingAnchor, constant: 60),
+            emailTextField.trailingAnchor.constraint(equalTo: conteinerForEmail.trailingAnchor, constant: -24),
+            emailTextField.heightAnchor.constraint(equalToConstant: 18)
+        ])
+        
+        NSLayoutConstraint.activate([
+            emailImage.topAnchor.constraint(equalTo: conteinerForEmail.topAnchor, constant: 11),
+            emailImage.leadingAnchor.constraint(equalTo: conteinerForEmail.leadingAnchor, constant: 23),
+        ])
+        
+        NSLayoutConstraint.activate([
+            ellipse.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -99),
+            ellipse.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -100),
+            ellipse.heightAnchor.constraint(equalToConstant: 600),
+            ellipse.widthAnchor.constraint(equalToConstant: 600)
+        ])
+        
+        NSLayoutConstraint.activate([
+            whiteCar.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 42),
+            whiteCar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40)
+        ])
+        
+        NSLayoutConstraint.activate([
+            conteinerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 361),
+            conteinerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 33),
+            conteinerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
+            conteinerView.heightAnchor.constraint(equalToConstant: 442),
+            conteinerView.widthAnchor.constraint(equalToConstant: 363)
+        ])
+        
+        NSLayoutConstraint.activate([
+            conteinerForPassword.topAnchor.constraint(equalTo: conteinerView.topAnchor, constant: 175),
+            conteinerForPassword.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 24),
+            conteinerForPassword.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -24),
+            conteinerForPassword.heightAnchor.constraint(equalToConstant: 45),
+            conteinerForPassword.widthAnchor.constraint(equalToConstant: 315)
+        ])
+        
+        NSLayoutConstraint.activate([
+            conteinerForEmail.topAnchor.constraint(equalTo: conteinerView.topAnchor, constant: 111),
+            conteinerForEmail.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 24),
+            conteinerForEmail.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -24),
+            conteinerForEmail.heightAnchor.constraint(equalToConstant: 45),
+            conteinerForEmail.widthAnchor.constraint(equalToConstant: 315)
+        ])
+        
+        NSLayoutConstraint.activate([
+            signUpLabel.topAnchor.constraint(equalTo: conteinerView.topAnchor, constant: 34),
+            signUpLabel.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 90),
+            signUpLabel.heightAnchor.constraint(equalToConstant: 36)
+        ])
+
+        contentViewHeightConstraint.isActive = true
+    }
+    
+    private func setupDelegate() {
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
     }
     
     private func registerKeybordNotification() {
@@ -207,156 +270,37 @@ final class LoginUIView: UIView, UITextFieldDelegate {
     }
     
     @objc private func keyboardWillShow(notification: Notification) {
-        let userInfo = notification.userInfo
-        let keyboardHeight = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        scrollView.contentOffset = CGPoint(x: 0, y: keyboardHeight.height)
+        guard
+            let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+            let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
+            let curve = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt
+        else {
+            return
+        }
+
+        if !keyboardIsVisible {
+            keyboardIsVisible = !keyboardIsVisible
+            contentViewHeightConstraint.constant += keyboardHeight.height / 2
+            UIView.animate(withDuration: duration, delay: .zero, options: UIView.AnimationOptions(rawValue: curve), animations: { self.layoutIfNeeded() }, completion: nil)
+        }
     }
     
     @objc private func keyboardWillHide(notification: Notification) {
-        scrollView.contentOffset = CGPoint.zero
+        guard
+            let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+            let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
+            let curve = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt
+        else {
+            return
+        }
+        
+        if keyboardIsVisible {
+            keyboardIsVisible = !keyboardIsVisible
+            contentViewHeightConstraint.constant -= keyboardHeight.height / 2
+            UIView.animate(withDuration: duration, delay: .zero, options: UIView.AnimationOptions(rawValue: curve), animations: { self.layoutIfNeeded() }, completion: nil)
+        }
     }
-    
-    private func setupDelegate() {
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        emailTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
-        return true
-    }
-    
-//    private func scrollViewConstraints() {
-//        NSLayoutConstraint.activate([
-//            scrollView.topAnchor.constraint(equalTo: self.topAnchor),
-//            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-//            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-//            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-//        ])
-//    }
-//
-//    private func contentViewConstraints() {
-//        NSLayoutConstraint.activate([
-//            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-//            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-//            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-//            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
-//        ])
-//    }
-    
-    private func signInButtonConstraints() {
-        NSLayoutConstraint.activate([
-            signInButton.topAnchor.constraint(equalTo: haveAccLabel.bottomAnchor, constant: 5),
-            signInButton.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 140),
-            signInButton.heightAnchor.constraint(equalToConstant: 18)
-        ])
-    }
-    
-    private func haveAccLabelConstraints() {
-        NSLayoutConstraint.activate([
-            haveAccLabel.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 55),
-            haveAccLabel.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 105),
-            haveAccLabel.heightAnchor.constraint(equalToConstant: 18)
-        ])
-    }
-    
-    private func signUpButtonConstraints() {
-        NSLayoutConstraint.activate([
-            signUpButton.topAnchor.constraint(equalTo: conteinerView.topAnchor, constant: 250),
-            signUpButton.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 24),
-            signUpButton.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -24),
-            signUpButton.heightAnchor.constraint(equalToConstant: 45),
-            signUpButton.widthAnchor.constraint(equalToConstant: 315)
-        ])
-    }
-    
-    private func passwordTextFieldConstraints() {
-        NSLayoutConstraint.activate([
-            passwordTextField.topAnchor.constraint(equalTo: conteinerForPassword.topAnchor, constant: 14),
-            passwordTextField.leadingAnchor.constraint(equalTo: conteinerForPassword.leadingAnchor, constant: 60),
-            passwordTextField.trailingAnchor.constraint(equalTo: conteinerForPassword.trailingAnchor, constant: -24),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 18)
-        ])
-    }
-    
-    private func passwordImageConstraints() {
-        NSLayoutConstraint.activate([
-            passwordImage.topAnchor.constraint(equalTo: conteinerForPassword.topAnchor, constant: 11),
-            passwordImage.leadingAnchor.constraint(equalTo: conteinerForPassword.leadingAnchor, constant: 23)
-        ])
-    }
-    
-    private func emailTextFieldConstraints() {
-        NSLayoutConstraint.activate([
-            emailTextField.topAnchor.constraint(equalTo: conteinerForEmail.topAnchor, constant: 14),
-            emailTextField.leadingAnchor.constraint(equalTo: conteinerForEmail.leadingAnchor, constant: 60),
-            emailTextField.trailingAnchor.constraint(equalTo: conteinerForEmail.trailingAnchor, constant: -24),
-            emailTextField.heightAnchor.constraint(equalToConstant: 18)
-        ])
-    }
-    
-    private func emailImageConstraints() {
-        NSLayoutConstraint.activate([
-            emailImage.topAnchor.constraint(equalTo: conteinerForEmail.topAnchor, constant: 11),
-            emailImage.leadingAnchor.constraint(equalTo: conteinerForEmail.leadingAnchor, constant: 23),
-        ])
-    }
-    
-    private func ellipseConstraints() {
-        NSLayoutConstraint.activate([
-            ellipse.topAnchor.constraint(equalTo: self.topAnchor, constant: -99),
-            ellipse.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -100),
-            ellipse.heightAnchor.constraint(equalToConstant: 600),
-            ellipse.widthAnchor.constraint(equalToConstant: 600)
-        ])
-    }
-    
-    private func whiteCarConstraints() {
-        NSLayoutConstraint.activate([
-            whiteCar.topAnchor.constraint(equalTo: self.topAnchor, constant: 42),
-            whiteCar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40)
-        ])
-    }
-    
-    private func conteinerConstraints() {
-        NSLayoutConstraint.activate([
-            conteinerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 361),
-            conteinerView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 33),
-            conteinerView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -32),
-            conteinerView.heightAnchor.constraint(equalToConstant: 442),
-            conteinerView.widthAnchor.constraint(equalToConstant: 363)
-        ])
-    }
-    
-    private func conteinerForPasswordConstraints() {
-        NSLayoutConstraint.activate([
-            conteinerForPassword.topAnchor.constraint(equalTo: conteinerView.topAnchor, constant: 175),
-            conteinerForPassword.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 24),
-            conteinerForPassword.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -24),
-            conteinerForPassword.heightAnchor.constraint(equalToConstant: 45),
-            conteinerForPassword.widthAnchor.constraint(equalToConstant: 315)
-        ])
-    }
-    
-    private func conteinerForEmailConstraints() {
-        NSLayoutConstraint.activate([
-            conteinerForEmail.topAnchor.constraint(equalTo: conteinerView.topAnchor, constant: 111),
-            conteinerForEmail.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 24),
-            conteinerForEmail.trailingAnchor.constraint(equalTo: conteinerView.trailingAnchor, constant: -24),
-            conteinerForEmail.heightAnchor.constraint(equalToConstant: 45),
-            conteinerForEmail.widthAnchor.constraint(equalToConstant: 315)
-        ])
-    }
-    
-    private func signUpLabelConstraints() {
-        NSLayoutConstraint.activate([
-            signUpLabel.topAnchor.constraint(equalTo: conteinerView.topAnchor, constant: 34),
-            signUpLabel.leadingAnchor.constraint(equalTo: conteinerView.leadingAnchor, constant: 90),
-            signUpLabel.heightAnchor.constraint(equalToConstant: 36)
-        ])
-    }
-    
+
     @objc private func signButtonDidTap(_ sender: UIButton) {
         delegateWelcome?.signUpButtonTapped(signUpButton, emailTextField, passwordTextField)
     }
@@ -365,4 +309,13 @@ final class LoginUIView: UIView, UITextFieldDelegate {
         delegateWelcome?.signInButtonTapped(signInButton)
     }
 
+}
+
+extension LoginUIView: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }

@@ -1,20 +1,45 @@
-//
-//  MenuView.swift
-//  CarRentalApp
-//
-//  Created by admin on 13.06.2022.
-//
 
 import UIKit
 
 class MenuView: UIView {
+    
+    private lazy var titleGoOut: UIButton = {
+       let button = UIButton()
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.setTitle("Go Out", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 20)
+        button.addTarget(self, action: #selector(goOutButtonDidTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    weak var delegateGoOutButton: ExitingTheApp?
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .gray
+        
+        addSubviews()
+        setupConstraints()
     }
-    */
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func addSubviews() {
+        [titleGoOut].forEach{ subview in addSubview(subview) }
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            titleGoOut.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 50),
+            titleGoOut.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -50)
+        ])
+    }
+    
+    @objc private func goOutButtonDidTap() {
+        delegateGoOutButton?.goOutButtonTapped()
+    }
+    
 }

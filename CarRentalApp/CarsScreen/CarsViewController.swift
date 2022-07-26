@@ -1,21 +1,17 @@
-//
-//  CarsViewController.swift
-//  CarRentalApp
-//
-//  Created by admin on 09.05.2022.
-//
 
 import UIKit
 
-class CarsViewController: UIViewController {
+final class CarsViewController: UIViewController {
     
     private let tableManager: CarsTableViewManager
     private let collectionManager: BrandsCollectionViewManager
     private let carsView = CarsUIView()
+    private let userDefaultProvider: UserDefaultProvider
     
-    init(dataProvider: CarsDataProvider, rentalModel: DataModelExample, historyDataProvider: HistoryDataProvider) {
+    init(dataProvider: CarsDataProvider, rentalModel: DataModelExample, historyDataProvider: HistoryDataProvider, userDefaultProvider: UserDefaultProvider) {
         self.tableManager = CarsTableViewManager(dataProvider: dataProvider, historyDataProvider: historyDataProvider)
         self.collectionManager = BrandsCollectionViewManager(rentalModel: rentalModel)
+        self.userDefaultProvider = userDefaultProvider
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -66,7 +62,8 @@ extension CarsViewController: ChooseCollectionViewProtocol {
 extension CarsViewController: PushToBookingProtocol {
    
     func cellDidTap(cars: CarsTable, historyDataProvider: HistoryDataProvider) {
-        let vcBooking = BookingViewController(cars: cars, historyDataProvider: historyDataProvider)
-        navigationController?.pushViewController(vcBooking, animated: true)
-    }    
+        let vcBooking = BookingViewController(cars: cars, historyDataProvider: historyDataProvider, userDefaultProvider: userDefaultProvider)
+        pushModule(withViewController: vcBooking)
+    }
+    
 }

@@ -1,9 +1,3 @@
-//
-//  DataModelCarsInTable.swift
-//  CarRentalApp
-//
-//  Created by admin on 11.05.2022.
-//
 
 import Foundation
 import UIKit
