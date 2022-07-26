@@ -10,6 +10,6 @@ import UIKit
 
 protocol PaymentProtocol: AnyObject {
     
-    func payButtonTapped(_ sender: UIButton, _ label: UILabel, historyDataProvider: HistoryDataProvider)
+    func payButtonTapped(_ sender: UIButton, historyDataProvider: HistoryDataProvider)
     
 }

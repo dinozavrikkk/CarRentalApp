@@ -1,9 +1,3 @@
-//
-//  BrandModel.swift
-//  CarRentalApp
-//
-//  Created by admin on 08.05.2022.
-//
 
 import Foundation
 import UIKit

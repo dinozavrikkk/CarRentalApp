@@ -1,9 +1,3 @@
-//
-//  CarsTableViewCell.swift
-//  CarRentalApp
-//
-//  Created by admin on 09.05.2022.
-//
 
 import UIKit
 
@@ -43,6 +37,7 @@ final class CarsTableViewCell: UITableViewCell {
     private lazy var carImage: UIImageView = {
        let image = UIImageView()
         image.image = UIImage(named: "bmwx5")
+        image.contentMode = .scaleAspectFit
         return image
     }()
     
@@ -77,31 +72,13 @@ final class CarsTableViewCell: UITableViewCell {
     }
     
     private func setupConstraints() {
-        conteinerConstraints()
-        carPriceConstraints()
-        modelCarConstraints()
-        submodelCarConstraints()
-        carImageConstraints()
-        dollarLabelConstraints()
-    }
-    
-    func update(dataModel: CarsTable) {
-        carImage.image = dataModel.carPhoto
-        modelCar.text = dataModel.model
-        submodelCar.text = dataModel.stamp
-        carPrice.text = dataModel.price
-    }
-    
-    private func dollarLabelConstraints() {
+        
         NSLayoutConstraint.activate([
             dollarLabel.topAnchor.constraint(equalTo: conteiner.topAnchor, constant: 15),
             dollarLabel.leadingAnchor.constraint(equalTo: conteiner.leadingAnchor, constant: 245),
             dollarLabel.heightAnchor.constraint(equalToConstant: 18)
         ])
-    }
-    
-    
-    private func carImageConstraints() {
+        
         NSLayoutConstraint.activate([
             carImage.topAnchor.constraint(equalTo: conteiner.topAnchor, constant: 40),
             carImage.leadingAnchor.constraint(equalTo: conteiner.leadingAnchor, constant: 30),
@@ -109,36 +86,28 @@ final class CarsTableViewCell: UITableViewCell {
             carImage.widthAnchor.constraint(equalToConstant: 250),
             carImage.heightAnchor.constraint(equalToConstant: 146)
         ])
-    }
-    
-    private func submodelCarConstraints() {
+        
         NSLayoutConstraint.activate([
             submodelCar.topAnchor.constraint(equalTo: conteiner.topAnchor, constant: 30),
             submodelCar.leadingAnchor.constraint(equalTo: conteiner.leadingAnchor, constant: 10),
             submodelCar.heightAnchor.constraint(equalToConstant: 20),
             submodelCar.widthAnchor.constraint(equalToConstant: 140)
         ])
-    }
-    
-    private func modelCarConstraints() {
+        
         NSLayoutConstraint.activate([
-        modelCar.topAnchor.constraint(equalTo: conteiner.topAnchor, constant: 15),
-        modelCar.leadingAnchor.constraint(equalTo: conteiner.leadingAnchor, constant: 10),
-        modelCar.heightAnchor.constraint(equalToConstant: 18),
-        modelCar.widthAnchor.constraint(equalToConstant: 200)
+            modelCar.topAnchor.constraint(equalTo: conteiner.topAnchor, constant: 15),
+            modelCar.leadingAnchor.constraint(equalTo: conteiner.leadingAnchor, constant: 10),
+            modelCar.heightAnchor.constraint(equalToConstant: 18),
+            modelCar.widthAnchor.constraint(equalToConstant: 200)
         ])
-    }
-    
-    private func carPriceConstraints() {
+        
         NSLayoutConstraint.activate([
             carPrice.topAnchor.constraint(equalTo: conteiner.topAnchor, constant: 15),
             carPrice.leadingAnchor.constraint(equalTo: dollarLabel.trailingAnchor, constant: 5),
             carPrice.trailingAnchor.constraint(equalTo: conteiner.trailingAnchor, constant: -5),
             carPrice.heightAnchor.constraint(equalToConstant: 18)
         ])
-    }
-    
-    private func conteinerConstraints() {
+        
         NSLayoutConstraint.activate([
             conteiner.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
             conteiner.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
@@ -146,6 +115,13 @@ final class CarsTableViewCell: UITableViewCell {
             conteiner.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             conteiner.heightAnchor.constraint(equalToConstant: 200)
         ])
+    }
+    
+    func update(dataModel: CarsTable) {
+        carImage.image = dataModel.carPhoto
+        modelCar.text = dataModel.model
+        submodelCar.text = dataModel.stamp
+        carPrice.text = dataModel.price
     }
 
 }

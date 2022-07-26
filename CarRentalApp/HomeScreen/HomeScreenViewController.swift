@@ -1,25 +1,21 @@
-//
-//  HomeScreenViewController.swift
-//  CarRentalApp
-//
-//  Created by admin on 08.05.2022.
-//
 
 import UIKit
 
-class HomeScreenViewController: UIViewController {
+final class HomeScreenViewController: UIViewController {
 
     private let homeScreen = HomeUIView()
     private let collectionManager: BrandsCollectionViewManager
     private let dataProvider: CarsDataProvider
     private let rentalModel: DataModelExample
     private let historyDataProvider: HistoryDataProvider
+    private let userDefaultProvider: UserDefaultProvider
     private let userDefault = UserDefaults.standard
     
-    init(dataProvider: CarsDataProvider, rentalModel: DataModelExample, historyDataProvider: HistoryDataProvider) {
+    init(dataProvider: CarsDataProvider, rentalModel: DataModelExample, historyDataProvider: HistoryDataProvider, userDefaultProvider: UserDefaultProvider) {
         self.dataProvider = dataProvider
         self.rentalModel = rentalModel
         self.historyDataProvider = historyDataProvider
+        self.userDefaultProvider = userDefaultProvider
         self.collectionManager = BrandsCollectionViewManager(rentalModel: rentalModel)
         super.init(nibName: nil, bundle: nil)
     }
@@ -39,15 +35,7 @@ class HomeScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         homeScreen.brandsCollectionView.register(BrandsCollectionViewCell.self, forCellWithReuseIdentifier: "BrandsCollectionViewCell")
-//        navigationItem.hidesBackButton = true
-        //tabBarController?.navigationItem.hidesBackButton = true
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Go out", style: .done, target: self, action: #selector(rightButtonDidTap))
-        navigationItem.rightBarButtonItem?.tintColor = .white
-    }
-    
-    @objc private func rightButtonDidTap() {
-       // userDefault.setValue(false, forKey: "isLogin")
-        navigationController?.popToRootViewController(animated: true)
+        tabBarController?.navigationItem.hidesBackButton = true
     }
     
 }
@@ -55,8 +43,11 @@ class HomeScreenViewController: UIViewController {
 extension HomeScreenViewController: HomeScreenProtocol {
     
     func viewAllButtonTapped(_ sender: UIButton) {
-        navigationController?.pushViewController(CarsViewController(dataProvider: dataProvider, rentalModel: rentalModel, historyDataProvider: historyDataProvider), animated: true)
+        pushModule(withViewController: CarsViewController(dataProvider: dataProvider, rentalModel: rentalModel, historyDataProvider: historyDataProvider, userDefaultProvider: userDefaultProvider))
     }
     
+    func containerForCarViewTapped(_ sender: UIView) {
+        pushModule(withViewController: CarsViewController(dataProvider: dataProvider, rentalModel: rentalModel, historyDataProvider: historyDataProvider, userDefaultProvider: userDefaultProvider))
+    }
     
 }

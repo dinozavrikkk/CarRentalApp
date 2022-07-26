@@ -1,8 +1,12 @@
-//
-//  UIViewController + Extension.swift
-//  CarRentalApp
-//
-//  Created by admin on 14.06.2022.
-//
 
 import Foundation
+import UIKit
+
+extension UIViewController {
+    
+    func pushModule(withViewController viewController: UIViewController, animated: Bool = true, hidesTabBarWhenPushed: Bool = true) {
+        viewController.hidesBottomBarWhenPushed = hidesTabBarWhenPushed
+        navigationController?.pushViewController(viewController, animated: animated)
+    }
+    
+}

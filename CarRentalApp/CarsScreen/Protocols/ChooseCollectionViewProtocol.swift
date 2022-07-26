@@ -1,9 +1,3 @@
-//
-//  ChooseCollectionViewProtocol.swift
-//  CarRentalApp
-//
-//  Created by admin on 15.05.2022.
-//
 
 import Foundation
 import UIKit

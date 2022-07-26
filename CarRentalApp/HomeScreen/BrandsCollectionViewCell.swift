@@ -1,9 +1,3 @@
-//
-//  BrandsCollectionViewCell.swift
-//  CarRentalApp
-//
-//  Created by admin on 08.05.2022.
-//
 
 import UIKit
 
@@ -37,10 +31,6 @@ final class BrandsCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update(dataModel: BrandModel) {
-        mainImage.image = dataModel.modelImage
-    }
-    
     private func addSubviews() {
         contentView.addSubview(conteinerForImage)
         contentView.addSubview(mainImage)
@@ -51,26 +41,25 @@ final class BrandsCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupConstraints() {
-        conteinerForImageConstraints()
-        mainImageConstraints()
-    }
-    
-    private func conteinerForImageConstraints() {
+        
         NSLayoutConstraint.activate([
             conteinerForImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             conteinerForImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             conteinerForImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
             conteinerForImage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         ])
-    }
-    
-    private func mainImageConstraints() {
+        
         NSLayoutConstraint.activate([
             mainImage.topAnchor.constraint(equalTo: conteinerForImage.topAnchor, constant: 15),
             mainImage.leadingAnchor.constraint(equalTo: conteinerForImage.leadingAnchor, constant: 15),
             mainImage.heightAnchor.constraint(equalToConstant: 50),
             mainImage.widthAnchor.constraint(equalToConstant: 50)
         ])
+
+    }
+    
+    func update(dataModel: BrandModel) {
+        mainImage.image = dataModel.modelImage
     }
     
 }

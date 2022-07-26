@@ -1,9 +1,3 @@
-//
-//  Model.swift
-//  CarRentalApp
-//
-//  Created by admin on 06.06.2022.
-//
 
 import Foundation
 

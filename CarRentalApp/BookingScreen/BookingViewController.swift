@@ -1,9 +1,3 @@
-//
-//  BookingViewController.swift
-//  CarRentalApp
-//
-//  Created by admin on 13.05.2022.
-//
 
 import UIKit
 
@@ -12,9 +6,11 @@ class BookingViewController: UIViewController {
     private var counter: Int = 2
     let bookingView: BookingUIView
     private var cars: CarsTable
+    private let userDefaultProvider: UserDefaultProvider
     
-    init(cars: CarsTable, historyDataProvider: HistoryDataProvider) {
+    init(cars: CarsTable, historyDataProvider: HistoryDataProvider, userDefaultProvider: UserDefaultProvider) {
         self.bookingView = BookingUIView(historyDataProvider: historyDataProvider)
+        self.userDefaultProvider = userDefaultProvider
         self.cars = cars
         super.init(nibName: nil, bundle: nil)
     }
@@ -22,7 +18,6 @@ class BookingViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     override func loadView() {
         
@@ -54,8 +49,8 @@ extension BookingViewController: BookingButtonsProtocol {
     func bookButtonTapped(_ sender: UIButton, historyDataProvider: HistoryDataProvider) {
         cars.price = bookingView.totalPriceLabel.text!
         cars.rentalDays = (bookingView.counterButton.titleLabel?.text)!
-        let vcPayment = PaymentViewController(cars: cars, historyDataProvider: historyDataProvider)
-        navigationController?.pushViewController(vcPayment, animated: true)
+        let vcPayment = PaymentViewController(cars: cars, historyDataProvider: historyDataProvider, userDefaultProvider: userDefaultProvider)
+        pushModule(withViewController: vcPayment)
     }
     
     func counterButtonTapped(_ sender: UIButton) {

@@ -1,15 +1,7 @@
-//
-//  HomeUIView.swift
-//  CarRentalApp
-//
-//  Created by admin on 08.05.2022.
-//
 
 import UIKit
 
 final class HomeUIView: UIView {
-
-    weak var delegateHome: HomeScreenProtocol?
     
     private lazy var backColorScreen: UIView = {
        let view = UIView()
@@ -65,6 +57,9 @@ final class HomeUIView: UIView {
        let view = UIView()
         view.backgroundColor = UIColor(red: 0.961, green: 0.965, blue: 0.98, alpha: 1)
         view.layer.cornerRadius = 10
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(conteinerForCarDidTap))
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
         return view
     }()
     
@@ -101,6 +96,8 @@ final class HomeUIView: UIView {
     private lazy var whiteTopConstraint = whiteCar.topAnchor.constraint(equalTo: self.topAnchor, constant: 42)
     private lazy var whiteLeadingConstraint = whiteCar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40)
     
+    weak var delegateHome: HomeScreenProtocol?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -123,114 +120,77 @@ final class HomeUIView: UIView {
     }
     
     private func setupConstraints() {
-        brandsLabelConstraints()
-        brandsCollectionViewConstraints()
-        backColorScreenConstraints()
-        //whiteCarConstraints()
-        hotLabelConstraints()
-        viewAllConstraints()
-        conteinerForCarConstraints()
-        mainCarConstraints()
-        priceLabelConstraints()
-        modelCarLabelConstraints()
-        submodelCarLabelConstraints()
-        [whiteTopConstraint, whiteLeadingConstraint].forEach{ $0.isActive = true }
-    }
-    
-    private func submodelCarLabelConstraints() {
+        
         NSLayoutConstraint.activate([
             submodelCarLabel.topAnchor.constraint(equalTo: conteinerForCar.topAnchor, constant: 40),
             submodelCarLabel.leadingAnchor.constraint(equalTo: conteinerForCar.leadingAnchor, constant: 9),
             submodelCarLabel.heightAnchor.constraint(equalToConstant: 23),
             submodelCarLabel.widthAnchor.constraint(equalToConstant: 70)
         ])
-    }
-    
-    private func modelCarLabelConstraints() {
+        
         NSLayoutConstraint.activate([
             modelCarLabel.topAnchor.constraint(equalTo: conteinerForCar.topAnchor, constant: 13),
             modelCarLabel.leadingAnchor.constraint(equalTo: conteinerForCar.leadingAnchor, constant: 9),
             modelCarLabel.heightAnchor.constraint(equalToConstant: 21),
             modelCarLabel.widthAnchor.constraint(equalToConstant: 50)
         ])
-    }
-    
-    private func priceLabelConstraints() {
+        
         NSLayoutConstraint.activate([
             priceLabel.topAnchor.constraint(equalTo: conteinerForCar.topAnchor, constant: 13),
             priceLabel.leadingAnchor.constraint(equalTo: conteinerForCar.leadingAnchor, constant: 265),
             priceLabel.trailingAnchor.constraint(equalTo: conteinerForCar.trailingAnchor, constant: -9),
             priceLabel.heightAnchor.constraint(equalToConstant: 21),
         ])
-    }
-    
-    private func mainCarConstraints() {
+        
         NSLayoutConstraint.activate([
             mainCar.topAnchor.constraint(equalTo: conteinerForCar.topAnchor, constant: 20),
             mainCar.leadingAnchor.constraint(equalTo: conteinerForCar.leadingAnchor, constant: 20),
             mainCar.heightAnchor.constraint(equalToConstant: 170)
         ])
-    }
-    
-    private func conteinerForCarConstraints() {
+        
         NSLayoutConstraint.activate([
             conteinerForCar.topAnchor.constraint(equalTo: brandsCollectionView.bottomAnchor, constant: 110),
             conteinerForCar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
             conteinerForCar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
             conteinerForCar.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100)
         ])
-    }
-    
-    private func viewAllConstraints() {
+        
         NSLayoutConstraint.activate([
             viewAll.topAnchor.constraint(equalTo: brandsCollectionView.bottomAnchor, constant: 70),
             viewAll.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 275),
             viewAll.heightAnchor.constraint(equalToConstant: 30),
             viewAll.widthAnchor.constraint(equalToConstant: 93)
         ])
-    }
-    
-    private func hotLabelConstraints() {
+        
         NSLayoutConstraint.activate([
             hotLabel.topAnchor.constraint(equalTo: brandsCollectionView.bottomAnchor, constant: 70),
             hotLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
             hotLabel.heightAnchor.constraint(equalToConstant: 30),
             hotLabel.widthAnchor.constraint(equalToConstant: 100)
         ])
-    }
-    
-    private func backColorScreenConstraints() {
+        
         NSLayoutConstraint.activate([
             backColorScreen.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
             backColorScreen.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             backColorScreen.heightAnchor.constraint(equalToConstant: 402),
             backColorScreen.widthAnchor.constraint(equalToConstant: 428)
         ])
-    }
-    
-    private func brandsLabelConstraints() {
+        
         NSLayoutConstraint.activate([
             brandsLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 324),
             brandsLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
             brandsLabel.heightAnchor.constraint(equalToConstant: 30)
         ])
-    }
-    
-    private func brandsCollectionViewConstraints() {
+        
         NSLayoutConstraint.activate([
             brandsCollectionView.topAnchor.constraint(equalTo: brandsLabel.bottomAnchor, constant: 9),
             brandsCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
             brandsCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
             brandsCollectionView.heightAnchor.constraint(equalToConstant: 80)
         ])
+        
+        [whiteTopConstraint, whiteLeadingConstraint].forEach{ $0.isActive = true }
     }
-    
-//    private func whiteCarConstraints() {
-//        NSLayoutConstraint.activate([
-//            whiteCar.topAnchor.constraint(equalTo: self.topAnchor, constant: 42),
-//            whiteCar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40)
-//        ])
-//    }
     
     @objc private func whiteCarDidTap(_ gesture: UITapGestureRecognizer) {
         UIView.animate(withDuration: 0.5, delay: 0, animations: { self.whiteCar.transform = CGAffineTransform(rotationAngle: -0.5) }) {_ in
@@ -270,8 +230,12 @@ final class HomeUIView: UIView {
         }
     }
     
-    @objc private func viewAllButtonDidTap(_ sender: UIButton) {
+    @objc private func viewAllButtonDidTap() {
         delegateHome?.viewAllButtonTapped(viewAll)
+    }
+    
+    @objc private func conteinerForCarDidTap() {
+        delegateHome?.containerForCarViewTapped(conteinerForCar)
     }
     
 }

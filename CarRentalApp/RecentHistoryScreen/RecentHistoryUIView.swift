@@ -1,9 +1,3 @@
-//
-//  RecentHistoryUIView.swift
-//  CarRentalApp
-//
-//  Created by admin on 01.06.2022.
-//
 
 import UIKit
 
@@ -35,6 +29,16 @@ class RecentHistoryUIView: UIView {
         return tableView
     }()
     
+    private var titlePlug: UILabel = {
+       let label = UILabel()
+        label.textColor = .black
+        label.text = "Your order history will be displayed here"
+        label.font = .boldSystemFont(ofSize: 40)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
@@ -47,34 +51,31 @@ class RecentHistoryUIView: UIView {
     }
     
     private func addSubviews() {
-        [conteinerForStatusBar, historyLabel, historyTableView].forEach{ subview in addSubview(subview) }
+        [conteinerForStatusBar, historyLabel, historyTableView, titlePlug].forEach{ subview in addSubview(subview) }
     }
     
     private func setupConstraints() {
-        conteinerForStatusBarConstraints()
-        historyLabelConstraints()
-        historyTableViewConstraints()
-    }
-    
-    private func historyTableViewConstraints() {
+        NSLayoutConstraint.activate([
+            titlePlug.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            titlePlug.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            titlePlug.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 50),
+            titlePlug.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -50)
+        ])
+        
         NSLayoutConstraint.activate([
             historyTableView.topAnchor.constraint(equalTo: historyLabel.bottomAnchor, constant: 40),
             historyTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 33),
             historyTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -32),
             historyTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100)
         ])
-    }
-    
-    private func historyLabelConstraints() {
+        
         NSLayoutConstraint.activate([
             historyLabel.topAnchor.constraint(equalTo: conteinerForStatusBar.bottomAnchor, constant: 20),
             historyLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 130),
             historyLabel.heightAnchor.constraint(equalToConstant: 30),
             historyLabel.widthAnchor.constraint(equalToConstant: 150)
         ])
-    }
-    
-    private func conteinerForStatusBarConstraints() {
+        
         NSLayoutConstraint.activate([
             conteinerForStatusBar.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
             conteinerForStatusBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
@@ -82,4 +83,9 @@ class RecentHistoryUIView: UIView {
             conteinerForStatusBar.heightAnchor.constraint(equalToConstant: 35)
         ])
     }
+    
+    func hidingSign() {
+        titlePlug.isHidden = true
+    }
+
 }

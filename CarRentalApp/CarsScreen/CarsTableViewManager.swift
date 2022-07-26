@@ -1,9 +1,3 @@
-//
-//  CarsTableViewManager.swift
-//  CarRentalApp
-//
-//  Created by admin on 09.05.2022.
-//
 
 import Foundation
 import UIKit
