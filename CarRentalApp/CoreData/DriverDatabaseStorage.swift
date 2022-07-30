@@ -18,15 +18,20 @@ struct DriverDatabaseStorage {
         }
     }
     
-    func driverDatabaseIsEmpty(completion: ((Bool) -> Void)?) {
+    func driverDatabaseIsEmpty(completion: ((Result<Bool, Error>) -> Void)?) {
          context.perform {
             let request = DriverInfo.fetchRequest()
-            let models = try! context.fetch(request)
-            if models.isEmpty {
-                completion?(true)
-            } else {
-                completion?(false)
-            }
+            do {
+                let models = try context.fetch(request)
+                if models.isEmpty {
+                    completion?(.success(true))
+                } else {
+                    completion?(.success(false))
+                }
+             }
+             catch let error {
+                 completion?(.failure(error))
+             }
         }
     }
     
@@ -43,20 +48,34 @@ struct DriverDatabaseStorage {
         }
     }
     
-    func fetchDriverModel(completion: ((DriverInfo) -> Void)?) {
+    func fetchDriverModel(completion: ((Result<DriverInfo, Error>) -> Void)?) {
         context.perform {
             let request = DriverInfo.fetchRequest()
-            let models = try! context.fetch(request)
-            let model = models[0]
-            completion?(model)
+            do {
+                let models = try context.fetch(request)
+                if !models.isEmpty {
+                    let model = models[0]
+                    completion?(.success(model))
+                } else {
+                    print("Database don't have models")
+                }
+            }
+            catch let error {
+                completion?(.failure(error))
+            }
         }
     }
     
-    func fetchAllDriverModels(completion: (([DriverInfo]) -> Void)?) {
+    func fetchAllDriverModels(completion: ((Result<[DriverInfo], Error>) -> Void)?) {
         context.perform {
             let request = DriverInfo.fetchRequest()
-            let models = try! context.fetch(request)
-            completion?(models)
+            do {
+                let models = try context.fetch(request)
+                completion?(.success(models))
+            }
+            catch let error {
+                completion?(.failure(error))
+            }
         }
     }
     

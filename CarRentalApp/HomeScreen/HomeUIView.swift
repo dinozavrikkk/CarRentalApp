@@ -96,7 +96,7 @@ final class HomeUIView: UIView {
     private lazy var whiteTopConstraint = whiteCar.topAnchor.constraint(equalTo: self.topAnchor, constant: 42)
     private lazy var whiteLeadingConstraint = whiteCar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40)
     
-    weak var delegateHome: HomeScreenProtocol?
+    weak var delegateHome: HomeScreenDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

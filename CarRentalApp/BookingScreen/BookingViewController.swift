@@ -1,7 +1,7 @@
 
 import UIKit
 
-class BookingViewController: UIViewController {
+final class BookingViewController: UIViewController {
 
     private var counter: Int = 2
     let bookingView: BookingUIView
@@ -23,7 +23,7 @@ class BookingViewController: UIViewController {
         
         view = bookingView
         bookingView.delegateBooking = self
-        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     override func viewDidLoad() {
@@ -35,16 +35,12 @@ class BookingViewController: UIViewController {
         bookingView.pricePerDayLabel.text = "$\(cars.price) per day"
         bookingView.infoAboutCarTextView.text = cars.infoAboutCar
  
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButton"), style: .plain, target: self, action: #selector(backButtonTapped))
+        configureButtons()
     }
-    
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
-
 }
 
-extension BookingViewController: BookingButtonsProtocol {
+//MARK: BookingButtonsDelegate
+extension BookingViewController: BookingButtonsDelegate {
     
     func bookButtonTapped(_ sender: UIButton, historyDataProvider: HistoryDataProvider) {
         cars.price = bookingView.totalPriceLabel.text!
@@ -54,51 +50,29 @@ extension BookingViewController: BookingButtonsProtocol {
     }
     
     func counterButtonTapped(_ sender: UIButton) {
-        switch counter {
-        case 1:
-            bookingView.totalPriceLabel.text = cars.price
-            sender.setTitle("1", for: .normal)
-            bookingView.totalPriceLabel.text = "\(Int(bookingView.totalPriceLabel.text!)! * 1)"
-        case 2:
-            bookingView.totalPriceLabel.text = cars.price
-            sender.setTitle("2", for: .normal)
-            bookingView.totalPriceLabel.text = "\(Int(bookingView.totalPriceLabel.text!)! * 2)"
-        case 3:
-            bookingView.totalPriceLabel.text = cars.price
-            sender.setTitle("3", for: .normal)
-            bookingView.totalPriceLabel.text = "\(Int(bookingView.totalPriceLabel.text!)! * 3)"
-        case 4:
-            bookingView.totalPriceLabel.text = cars.price
-            sender.setTitle("4", for: .normal)
-            bookingView.totalPriceLabel.text = "\(Int(bookingView.totalPriceLabel.text!)! * 4)"
-        case 5:
-            bookingView.totalPriceLabel.text = cars.price
-            sender.setTitle("5", for: .normal)
-            bookingView.totalPriceLabel.text = "\(Int(bookingView.totalPriceLabel.text!)! * 5)"
-        case 6:
-            bookingView.totalPriceLabel.text = cars.price
-            sender.setTitle("6", for: .normal)
-            bookingView.totalPriceLabel.text = "\(Int(bookingView.totalPriceLabel.text!)! * 6)"
-        case 7:
-            bookingView.totalPriceLabel.text = cars.price
-            sender.setTitle("7", for: .normal)
-            bookingView.totalPriceLabel.text = "\(Int(bookingView.totalPriceLabel.text!)! * 7)"
-        case 8:
-            bookingView.totalPriceLabel.text = cars.price
-            sender.setTitle("8", for: .normal)
-            bookingView.totalPriceLabel.text = "\(Int(bookingView.totalPriceLabel.text!)! * 8)"
-        case 9:
-            bookingView.totalPriceLabel.text = cars.price
-            sender.setTitle("9", for: .normal)
-            bookingView.totalPriceLabel.text = "\(Int(bookingView.totalPriceLabel.text!)! * 9)"
-        case 10:
-            bookingView.totalPriceLabel.text = cars.price
-            sender.setTitle("10", for: .normal)
-            bookingView.totalPriceLabel.text = "\(Int(bookingView.totalPriceLabel.text!)! * 10)"
-        default:
-            counter = 0
-        }
-        counter += 1
+        CountingDays.counting(sender: sender, counter: &counter, defaultPrice: &bookingView.totalPriceLabel.text!, carPrice: cars.price)
+    }
+    
+}
+
+//MARK: UIGestureRecognizerDelegate
+extension BookingViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+}
+
+//MARK: Click processing, Configure buttons
+private extension BookingViewController {
+    
+    func configureButtons() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButton"), style: .plain, target: self, action: #selector(backButtonTapped))
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
     
 }

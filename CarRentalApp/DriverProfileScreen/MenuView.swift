@@ -1,7 +1,7 @@
 
 import UIKit
 
-class MenuView: UIView {
+final class MenuView: UIView {
     
     private lazy var titleGoOut: UIButton = {
        let button = UIButton()
@@ -13,7 +13,7 @@ class MenuView: UIView {
         return button
     }()
     
-    weak var delegateGoOutButton: ExitingTheApp?
+    weak var delegateGoOutButton: ExitingTheAppDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)

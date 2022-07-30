@@ -2,7 +2,7 @@
 import Foundation
 import UIKit
 
-class Alerts {
+enum Alerts {
     
     static func getSaveChangeAlert() {
         
@@ -89,6 +89,23 @@ class Alerts {
         
     }
     
+    static func getMessageAboutCarsAlert() {
+        
+        let alert = UIAlertController(title: nil, message: "We apologize, at the moment our cars are geographically located only in the city of Kazan", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close alert", style: .cancel))
+        UIApplication.topViewController()?.present(alert, animated: true)
+        
+    }
     
+    static func getLocationIsDisabledAlert() {
+        
+        let alert = UIAlertController(title: nil, message: "GPS access is restricted. In order to use tracking, please enable GPS in the Settings app under Privacy, Location Services.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close alert", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
+            UIApplication.shared.open(NSURL(string: UIApplication.openSettingsURLString)! as URL)
+        }))
+        UIApplication.topViewController()?.present(alert, animated: true)
+        
+    }
     
 }

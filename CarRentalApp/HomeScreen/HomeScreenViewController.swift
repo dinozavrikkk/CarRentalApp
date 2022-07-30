@@ -30,17 +30,19 @@ final class HomeScreenViewController: UIViewController {
         homeScreen.brandsCollectionView.delegate = collectionManager
         homeScreen.brandsCollectionView.dataSource = collectionManager
         homeScreen.delegateHome = self
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         homeScreen.brandsCollectionView.register(BrandsCollectionViewCell.self, forCellWithReuseIdentifier: "BrandsCollectionViewCell")
-        tabBarController?.navigationItem.hidesBackButton = true
+        configureButtons()
     }
     
 }
 
-extension HomeScreenViewController: HomeScreenProtocol {
+//MARK: HomeScreenDelegate
+extension HomeScreenViewController: HomeScreenDelegate {
     
     func viewAllButtonTapped(_ sender: UIButton) {
         pushModule(withViewController: CarsViewController(dataProvider: dataProvider, rentalModel: rentalModel, historyDataProvider: historyDataProvider, userDefaultProvider: userDefaultProvider))
@@ -51,3 +53,13 @@ extension HomeScreenViewController: HomeScreenProtocol {
     }
     
 }
+
+//MARK: Configure buttons
+private extension HomeScreenViewController {
+    
+    func configureButtons() {
+        tabBarController?.navigationItem.hidesBackButton = true
+    }
+    
+}
+

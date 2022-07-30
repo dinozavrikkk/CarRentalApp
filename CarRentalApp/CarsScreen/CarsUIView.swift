@@ -30,12 +30,6 @@ final class CarsUIView: UIView {
         return tableView
     }()
     
-    private lazy var conteinerForStatusBar: UIView = {
-       let view = UIView()
-        view.backgroundColor = .black
-        return view
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
@@ -50,7 +44,7 @@ final class CarsUIView: UIView {
     }
     
     private func addSubviews() {
-        [brandsLabel, brandsCollectionView, carsTableView, conteinerForStatusBar].forEach{ subview in addSubview(subview) }
+        [brandsLabel, brandsCollectionView, carsTableView].forEach{ subview in addSubview(subview) }
     }
     
     private func preconfigureSubviews() {
@@ -58,13 +52,6 @@ final class CarsUIView: UIView {
     }
     
     private func setupConstraints() {
-        
-        NSLayoutConstraint.activate([
-            conteinerForStatusBar.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
-            conteinerForStatusBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            conteinerForStatusBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            conteinerForStatusBar.heightAnchor.constraint(equalToConstant: 35)
-        ])
         
         NSLayoutConstraint.activate([
             carsTableView.topAnchor.constraint(equalTo: brandsLabel.bottomAnchor, constant: 142),

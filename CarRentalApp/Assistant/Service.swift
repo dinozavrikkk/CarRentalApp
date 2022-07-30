@@ -5,7 +5,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
-class Service {
+final class Service {
     
     static let shared = Service()
     

@@ -1,12 +1,20 @@
 
 import UIKit
 
-class DriverProfileViewController: UIViewController {
+final class DriverProfileViewController: UIViewController {
 
     private let driverProfile = DriverView()
-    private let driverDatabase = DriverDatabaseStorage()
     private let context = AppDataController.shared.context
-
+    private let driverDataProvider: DriverDataProvider
+    
+    init(driverDataProvider: DriverDataProvider) {
+        self.driverDataProvider = driverDataProvider
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = driverProfile
@@ -15,6 +23,7 @@ class DriverProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         driverProfile.delegateSave = self
+        driverProfile.addTapGestureToHideKeyboard()
     }
     
     deinit {
@@ -23,18 +32,13 @@ class DriverProfileViewController: UIViewController {
     
 }
 
-extension DriverProfileViewController: ProtocolInfoAboutDriver {
+//MARK: InfoAboutDriverDelegate
+extension DriverProfileViewController: InfoAboutDriverDelegate {
    
     func saveChangesDidTap() {
         guard let imageData = driverProfile.userImage.image?.pngData() else { return }
         
-        driverDatabase.driverDatabaseIsEmpty { [weak self] databaseIsEmpty in
-            if databaseIsEmpty == true {
-                self?.driverDatabase.save(id: UUID(), name: self?.driverProfile.nameTextField.text ?? "", surname: self?.driverProfile.surnameTextField.text ?? "", number: self?.driverProfile.numberTextField.text ?? "", imageData: imageData)
-            } else {
-                self?.driverDatabase.editDriverModel(name: self?.driverProfile.nameTextField.text ?? "", surname: self?.driverProfile.surnameTextField.text ?? "", number: self?.driverProfile.numberTextField.text ?? "", imageData: imageData)
-            }
-        }
+        driverDataProvider.changingTheData(name: driverProfile.nameTextField.text ?? "", surname: driverProfile.surnameTextField.text ?? "", number: driverProfile.numberTextField.text ?? "", imageData: imageData)
         Alerts.getSaveChangeAlert()
     }
     
@@ -44,7 +48,7 @@ extension DriverProfileViewController: ProtocolInfoAboutDriver {
             let picker = UIImagePickerController()
             picker.delegate = self
             picker.sourceType = .photoLibrary
-            picker.allowsEditing = false
+            picker.allowsEditing = true
             self?.present(picker, animated: true)
             
         } cameraCompletion: { [weak self] in
@@ -52,7 +56,7 @@ extension DriverProfileViewController: ProtocolInfoAboutDriver {
             let picker = UIImagePickerController()
             picker.delegate = self
             picker.sourceType = .camera
-            picker.allowsEditing = false
+            picker.allowsEditing = true
             self?.present(picker, animated: true)
             
         }
@@ -60,10 +64,11 @@ extension DriverProfileViewController: ProtocolInfoAboutDriver {
     
 }
 
+//MARK: UINavigationControllerDelegate, UIImagePickerControllerDelegate
 extension DriverProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage] as? UIImage {
+        if let image = info[.editedImage] as? UIImage {
             driverProfile.userImage.image = image
         }
         picker.dismiss(animated: true)

@@ -107,13 +107,6 @@ final class BookingUIView: UIView {
         return button
     }()
     
-    private lazy var conteinerForStatusBar: UIView = {
-       let view = UIView()
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     lazy var infoAboutCarTextView: UITextView = {
        let textView = UITextView()
         textView.backgroundColor = .lightGray
@@ -125,7 +118,7 @@ final class BookingUIView: UIView {
         return textView
     }()
     
-    weak var delegateBooking: BookingButtonsProtocol?
+    weak var delegateBooking: BookingButtonsDelegate?
     private let historyDataProvider: HistoryDataProvider
     
     init(historyDataProvider: HistoryDataProvider) {
@@ -142,7 +135,7 @@ final class BookingUIView: UIView {
     }
     
     private func addSubviews() {
-        [bigImageCar, conteinerForInfo, upperVerticalStackView, bottomHorizontalStackView, bookButton, counterButton, conteinerForStatusBar, infoAboutCarTextView].forEach{ subview in addSubview(subview) }
+        [bigImageCar, conteinerForInfo, upperVerticalStackView, bottomHorizontalStackView, bookButton, counterButton, infoAboutCarTextView].forEach{ subview in addSubview(subview) }
     }
     
     private func setupConstraints() {
@@ -152,13 +145,6 @@ final class BookingUIView: UIView {
             infoAboutCarTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 22),
             infoAboutCarTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -22),
             infoAboutCarTextView.heightAnchor.constraint(equalToConstant: 165)
-        ])
-        
-        NSLayoutConstraint.activate([
-            conteinerForStatusBar.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
-            conteinerForStatusBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            conteinerForStatusBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            conteinerForStatusBar.heightAnchor.constraint(equalToConstant: 35)
         ])
         
         NSLayoutConstraint.activate([

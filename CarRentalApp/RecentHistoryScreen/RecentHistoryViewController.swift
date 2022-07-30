@@ -1,7 +1,7 @@
 
 import UIKit
 
-class RecentHistoryViewController: UIViewController {
+final class RecentHistoryViewController: UIViewController {
 
     private let historyView = RecentHistoryUIView()
     private var dataProviderHistory: HistoryDataProvider
@@ -43,6 +43,7 @@ class RecentHistoryViewController: UIViewController {
     
 }
 
+//MARK: UITableViewDelegate, UITableViewDataSource
 extension RecentHistoryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

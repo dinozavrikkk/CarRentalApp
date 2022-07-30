@@ -1,14 +1,7 @@
 
 import UIKit
 
-class RecentHistoryUIView: UIView {
-
-    private lazy var conteinerForStatusBar: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+final class RecentHistoryUIView: UIView {
     
     private lazy var historyLabel: UILabel = {
         let label = UILabel()
@@ -51,7 +44,7 @@ class RecentHistoryUIView: UIView {
     }
     
     private func addSubviews() {
-        [conteinerForStatusBar, historyLabel, historyTableView, titlePlug].forEach{ subview in addSubview(subview) }
+        [historyLabel, historyTableView, titlePlug].forEach{ subview in addSubview(subview) }
     }
     
     private func setupConstraints() {
@@ -70,17 +63,10 @@ class RecentHistoryUIView: UIView {
         ])
         
         NSLayoutConstraint.activate([
-            historyLabel.topAnchor.constraint(equalTo: conteinerForStatusBar.bottomAnchor, constant: 20),
+            historyLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 54),
             historyLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 130),
             historyLabel.heightAnchor.constraint(equalToConstant: 30),
             historyLabel.widthAnchor.constraint(equalToConstant: 150)
-        ])
-        
-        NSLayoutConstraint.activate([
-            conteinerForStatusBar.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
-            conteinerForStatusBar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
-            conteinerForStatusBar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            conteinerForStatusBar.heightAnchor.constraint(equalToConstant: 35)
         ])
     }
     

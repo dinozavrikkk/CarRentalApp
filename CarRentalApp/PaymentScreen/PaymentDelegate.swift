@@ -1,14 +1,8 @@
-//
-//  PaymentProtocol.swift
-//  CarRentalApp
-//
-//  Created by admin on 24.05.2022.
-//
 
 import Foundation
 import UIKit
 
-protocol PaymentProtocol: AnyObject {
+protocol PaymentDelegate: AnyObject {
     
     func payButtonTapped(_ sender: UIButton, historyDataProvider: HistoryDataProvider)
     

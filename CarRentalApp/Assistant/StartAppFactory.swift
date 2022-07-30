@@ -2,24 +2,7 @@
 import Foundation
 import UIKit
 
-struct Factory {
-    
-    func startLogin() -> UIViewController {
-        
-        let dataCars = BackendDataModels()
-        let carsStorage = CarsStorage(cars: dataCars.dataBMW)
-        let obtainer = ObteinerForDataModel(dataStorage: carsStorage)
-        let dataProvider = CarsDataProvider(obtainer: obtainer)
-        
-        let rentalStorageCollection = DataModelExample()
-        
-        let dataCarsHistory = PatternDataModel()
-        let dataModelHistoryCarsTable = DataModelHistoryCarsTable(carHistoryTable: dataCarsHistory.dataPattern) 
-        let historyDataProvider = HistoryDataProvider(dataModelHistory: dataModelHistoryCarsTable)
-        
-        let loginVC = LoginViewController(dataProvider: dataProvider, rentalModel: rentalStorageCollection, historyDataProvider: historyDataProvider)
-        return loginVC
-    }
+struct StartAppFactory {
     
     func startApp() -> UITabBarController {
         
@@ -35,10 +18,13 @@ struct Factory {
         let historyDataProvider = HistoryDataProvider(dataModelHistory: dataModelHistoryCarsTable)
         let userDefaultProvider = UserDefaultProvider()
         
+        let driverDatabaseStorage = DriverDatabaseStorage()
+        let driverDataProvider = DriverDataProvider(driverDatabase: driverDatabaseStorage)
+        
         let homeVC = HomeScreenViewController(dataProvider: dataProvider, rentalModel: rentalStorageCollection, historyDataProvider: historyDataProvider, userDefaultProvider: userDefaultProvider)
         let recentVC = RecentHistoryViewController(dataProviderHistory: historyDataProvider)
         let mapVC = MapViewController()
-        let containerVC = ContainerViewController()
+        let containerVC = ContainerViewController(driverDataProvider: driverDataProvider)
         let tabBarVC = UITabBarController()
         tabBarVC.viewControllers = [homeVC, recentVC, mapVC, containerVC]
         

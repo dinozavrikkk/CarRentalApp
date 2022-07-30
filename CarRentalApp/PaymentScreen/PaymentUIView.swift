@@ -130,6 +130,7 @@ final class PaymentUIView: UIView {
         field.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         field.font = .systemFont(ofSize: 14)
         field.placeholder = "Card Number"
+        field.returnKeyType = .done
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
@@ -139,6 +140,7 @@ final class PaymentUIView: UIView {
         field.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         field.font = .systemFont(ofSize: 14)
         field.placeholder = "Card Holder’s Name"
+        field.returnKeyType = .done
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
@@ -148,6 +150,7 @@ final class PaymentUIView: UIView {
         field.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         field.font = .systemFont(ofSize: 14)
         field.placeholder = "MM/YY"
+        field.returnKeyType = .done
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
@@ -157,6 +160,7 @@ final class PaymentUIView: UIView {
         field.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         field.font = .systemFont(ofSize: 14)
         field.placeholder = "CVV"
+        field.returnKeyType = .done
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
@@ -179,7 +183,7 @@ final class PaymentUIView: UIView {
     
     private lazy var contentViewHeightConstraint = contentView.heightAnchor.constraint(equalTo: self.heightAnchor)
     
-    weak var delegatePayment: PaymentProtocol?
+    weak var delegatePayment: PaymentDelegate?
     private let historyDataProvider: HistoryDataProvider
     
     private var keyboardIsVisible = false
@@ -504,7 +508,7 @@ final class PaymentUIView: UIView {
         }
 
         if !keyboardIsVisible {
-            keyboardIsVisible = !keyboardIsVisible
+            keyboardIsVisible.toggle()
             contentViewHeightConstraint.constant += keyboardHeight.height / 2
             UIView.animate(withDuration: duration, delay: .zero, options: UIView.AnimationOptions(rawValue: curve), animations: { self.layoutIfNeeded() }, completion: nil)
         }
@@ -520,7 +524,7 @@ final class PaymentUIView: UIView {
         }
         
         if keyboardIsVisible {
-            keyboardIsVisible = !keyboardIsVisible
+            keyboardIsVisible.toggle()
             contentViewHeightConstraint.constant -= keyboardHeight.height / 2
             UIView.animate(withDuration: duration, delay: .zero, options: UIView.AnimationOptions(rawValue: curve), animations: { self.layoutIfNeeded() }, completion: nil)
         }
@@ -542,6 +546,7 @@ final class PaymentUIView: UIView {
     
 }
 
+//MARK: UITextFieldDelegate
 extension PaymentUIView: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

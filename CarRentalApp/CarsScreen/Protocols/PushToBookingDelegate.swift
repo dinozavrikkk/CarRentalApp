@@ -1,7 +1,7 @@
 
 import Foundation
 
-protocol PushToBookingProtocol: AnyObject {
+protocol PushToBookingDelegate: AnyObject {
     
     func cellDidTap(cars: CarsTable, historyDataProvider: HistoryDataProvider)
     

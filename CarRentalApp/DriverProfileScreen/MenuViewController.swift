@@ -1,7 +1,7 @@
 
 import UIKit
 
-class MenuViewController: UIViewController {
+final class MenuViewController: UIViewController {
     
     private let menuView = MenuView()
     private var userDefault = UserDefaults.standard
@@ -15,14 +15,15 @@ class MenuViewController: UIViewController {
     
 }
 
-extension MenuViewController: ExitingTheApp {
+//MARK: ExitingTheAppDelegate
+extension MenuViewController: ExitingTheAppDelegate {
     
     func goOutButtonTapped() {
         Alerts.getGoOutAlert { [weak self] in
-            let factory = Factory()
+            let startLoginFactory = StartLoginFactory()
             self?.userDefault.setValue(false, forKey: "isLogin")
             
-            self?.tabBarController?.navigationController?.viewControllers = [factory.startLogin()]
+            self?.tabBarController?.navigationController?.viewControllers = [startLoginFactory.startLogin()]
         }
     }
     

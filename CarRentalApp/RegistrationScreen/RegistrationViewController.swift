@@ -1,9 +1,3 @@
-//
-//  RegistrationViewController.swift
-//  CarRentalApp
-//
-//  Created by admin on 10.05.2022.
-//
 
 import UIKit
 
@@ -16,6 +10,7 @@ final class RegistrationViewController: UIViewController {
 
         view = registration
         registration.delegateRegistration = self
+        registration.addTapGestureToHideKeyboard()
         
     }
     
@@ -25,7 +20,8 @@ final class RegistrationViewController: UIViewController {
     
 }
 
-extension RegistrationViewController: RegistrationProtocol {
+//MARK: RegistrationDelegate
+extension RegistrationViewController: RegistrationDelegate {
     
     func signInButtonTapped(_ sender: UIButton, nickLabel: UILabel, emailLabel: UILabel, passLabel: UILabel, passField: UITextField, emailField: UITextField) {
         

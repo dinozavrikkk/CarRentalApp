@@ -5,7 +5,6 @@ final class PaymentViewController: UIViewController {
 
     private let paymentView: PaymentUIView
     private let cars: CarsTable
-//    private let jokeDataProvider: JokesDataProvider
     private let userDefaultProvider: UserDefaultProvider
 
     init(cars: CarsTable, historyDataProvider: HistoryDataProvider, userDefaultProvider: UserDefaultProvider) {
@@ -22,27 +21,25 @@ final class PaymentViewController: UIViewController {
     override func loadView() {
         view = paymentView
         paymentView.delegatePayment = self
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        paymentView.addTapGestureToHideKeyboard()
         paymentView.totalPriceLabel.text = "Total price: $\(cars.price)"
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButtonWhite"), style: .plain, target: self, action: #selector(backButtonTapped))
+        configureButtons()
     }
     
     deinit {
         paymentView.removeKeyboardNotification()
     }
-    
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
-    
 }
 
-extension PaymentViewController: PaymentProtocol {
+//MARK: PaymentDelegate
+extension PaymentViewController: PaymentDelegate {
 
     func payButtonTapped(_ sender: UIButton, historyDataProvider: HistoryDataProvider) {
         if !(paymentView.passTextField.text?.isEmpty ?? true) && !(paymentView.dateTextField.text?.isEmpty ?? true) && !(paymentView.holderTextField.text?.isEmpty ?? true) && !(paymentView.numberTextField.text?.isEmpty ?? true) {
@@ -51,7 +48,7 @@ extension PaymentViewController: PaymentProtocol {
                 self.navigationController?.popToRootViewController(animated: true)
             }
             if paymentView.isCompleted == false {
-                historyDataProvider.fetchJokee()
+                userDefaultProvider.fetchJoke()
                 userDefaultProvider.setUserDataToUserDefaults(pass: paymentView.passTextField.text ?? "", date: paymentView.dateTextField.text ?? "", holder: paymentView.holderTextField.text ?? "", number: paymentView.numberTextField.text ?? "")
             } else {
                 userDefaultProvider.deleteUserDataFromUserDefaults()
@@ -59,6 +56,28 @@ extension PaymentViewController: PaymentProtocol {
         } else {
             Alerts.getPayNowWithEmptyAlert()
         }
+    }
+    
+}
+
+//MARK: UIGestureRecognizerDelegate
+extension PaymentViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+}
+
+//MARK: Click processing, Configure buttons
+extension PaymentViewController {
+    
+    func configureButtons() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButtonWhite"), style: .plain, target: self, action: #selector(backButtonTapped))
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
     
 }

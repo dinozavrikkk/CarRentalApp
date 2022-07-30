@@ -1,7 +1,7 @@
 
 import UIKit
 
-class RecentHistoryTableViewCell: UITableViewCell {
+final class RecentHistoryTableViewCell: UITableViewCell {
     
     private lazy var containerForImage: UIView = {
         let view = UIView()
@@ -78,6 +78,7 @@ class RecentHistoryTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        self.backgroundColor = .clear
         
         addSubviews()
         setupConstraints()

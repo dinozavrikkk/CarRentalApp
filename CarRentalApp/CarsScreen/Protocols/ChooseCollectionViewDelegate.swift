@@ -3,7 +3,7 @@ import Foundation
 import UIKit
 
 
-protocol ChooseCollectionViewProtocol: AnyObject {
+protocol ChooseCollectionViewDelegate: AnyObject {
     
     func updateCellsInTable(dataProvider: CarsDataProvider) 
     

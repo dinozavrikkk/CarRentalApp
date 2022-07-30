@@ -1,7 +1,7 @@
 
 import Foundation
 
-protocol ProtocolInfoAboutDriver: AnyObject {
+protocol InfoAboutDriverDelegate: AnyObject {
     
     func saveChangesDidTap()
     func editPhotoDidTap()

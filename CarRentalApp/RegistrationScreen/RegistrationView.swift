@@ -81,6 +81,7 @@ final class RegistrationView: UIView {
         field.textColor = .black
         field.font = .systemFont(ofSize: 14)
         field.placeholder = "Write your email Address"
+        field.returnKeyType = .done
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
@@ -98,6 +99,7 @@ final class RegistrationView: UIView {
         field.font = .systemFont(ofSize: 14)
         field.placeholder = "Write your password"
         field.isSecureTextEntry = true
+        field.returnKeyType = .done
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
@@ -107,6 +109,7 @@ final class RegistrationView: UIView {
         field.textColor = .black
         field.font = .systemFont(ofSize: 14)
         field.placeholder = "Write your nickname"
+        field.returnKeyType = .done
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
@@ -165,7 +168,7 @@ final class RegistrationView: UIView {
         return view
     }()
     
-    weak var delegateRegistration: RegistrationProtocol?
+    weak var delegateRegistration: RegistrationDelegate?
     
     private let nicknameValidType: String.ValidTypes = .nickname
     private let emailValidType: String.ValidTypes = .email
@@ -370,6 +373,7 @@ final class RegistrationView: UIView {
     
 }
 
+//MARK: UITextFieldDelegate
 extension RegistrationView: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
