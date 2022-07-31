@@ -37,7 +37,7 @@ final class CarsTableViewCell: UITableViewCell {
     private lazy var carImage: UIImageView = {
        let image = UIImageView()
         image.image = UIImage(named: "bmwx5")
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
         return image
     }()
     
