@@ -13,6 +13,16 @@ final class MapView: UIView {
         return mv
     }()
     
+    private lazy var userLocationButton: UIButton = {
+       let button = UIButton()
+        button.setImage(UIImage(systemName: "paperplane.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 7
+        button.addTarget(self, action: #selector(userLocationButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private var places: [PlacesAnnotation] = []
     private let locationManager = CLLocationManager()
     
@@ -33,7 +43,7 @@ final class MapView: UIView {
     }
     
     private func addSubvies() {
-        [map].forEach{ subview in addSubview(subview) }
+        [map, userLocationButton].forEach{ subview in addSubview(subview) }
     }
     
     private func setupConstraints() {
@@ -43,6 +53,13 @@ final class MapView: UIView {
             map.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             map.topAnchor.constraint(equalTo: self.topAnchor),
             map.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100)
+        ])
+
+        NSLayoutConstraint.activate([
+            userLocationButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 100),
+            userLocationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12),
+            userLocationButton.heightAnchor.constraint(equalToConstant: 40),
+            userLocationButton.widthAnchor.constraint(equalToConstant: 40)
         ])
         
     }
@@ -89,6 +106,14 @@ final class MapView: UIView {
         let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: coordinate, span: span)
+        map.setRegion(region, animated: true)
+    }
+    
+    @objc private func userLocationButtonTapped() {
+        let coordinate = map.userLocation.coordinate
+        let center = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        let region = MKCoordinateRegion(center: center, span: span)
         map.setRegion(region, animated: true)
     }
     

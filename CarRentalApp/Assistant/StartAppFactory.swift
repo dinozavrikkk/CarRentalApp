@@ -21,7 +21,10 @@ struct StartAppFactory {
         let driverDatabaseStorage = DriverDatabaseStorage()
         let driverDataProvider = DriverDataProvider(driverDatabase: driverDatabaseStorage)
         
-        let homeVC = HomeScreenViewController(dataProvider: dataProvider, rentalModel: rentalStorageCollection, historyDataProvider: historyDataProvider, userDefaultProvider: userDefaultProvider)
+        let popularCarsModelExample = PopularCarsModelExample()
+        let popularCarsDataProvider = PopularCarsDataProvider(popularCarsDataModel: popularCarsModelExample)
+        
+        let homeVC = HomeScreenViewController(dataProvider: dataProvider, rentalModel: rentalStorageCollection, historyDataProvider: historyDataProvider, userDefaultProvider: userDefaultProvider, popularCarsProvider: popularCarsDataProvider)
         let recentVC = RecentHistoryViewController(dataProviderHistory: historyDataProvider)
         let mapVC = MapViewController()
         let containerVC = ContainerViewController(driverDataProvider: driverDataProvider)

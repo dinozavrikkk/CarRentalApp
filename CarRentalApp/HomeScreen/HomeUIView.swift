@@ -24,6 +24,8 @@ final class HomeUIView: UIView {
         collectionView.backgroundColor = UIColor.clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(switchToTheCarsScreen))
+        collectionView.addGestureRecognizer(tapGesture)
         return collectionView
     }()
     
@@ -40,7 +42,7 @@ final class HomeUIView: UIView {
        let label = UILabel()
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         label.font = .systemFont(ofSize: 20)
-        label.text = "Hot deals"
+        label.text = "Popular cars"
         return label
     }()
     
@@ -49,48 +51,18 @@ final class HomeUIView: UIView {
         button.setTitleColor(UIColor(red: 0.976, green: 0.706, blue: 0.004, alpha: 1), for: .normal)
         button.setTitle("View all...", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 20)
-        button.addTarget(self, action: #selector(viewAllButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(switchToTheCarsScreen), for: .touchUpInside)
         return button
     }()
-    
-    private lazy var conteinerForCar: UIView = {
-       let view = UIView()
-        view.backgroundColor = UIColor(red: 0.961, green: 0.965, blue: 0.98, alpha: 1)
-        view.layer.cornerRadius = 10
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(conteinerForCarDidTap))
-        view.addGestureRecognizer(tapGesture)
-        view.isUserInteractionEnabled = true
-        return view
-    }()
-    
-    private lazy var mainCar: UIImageView = {
-       let image = UIImageView()
-        image.image = UIImage(named: "q7")
-        return image
-    }()
-    
-    private lazy var priceLabel: UILabel = {
-       let label = UILabel()
-        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        label.text = "$14.99"
-        label.font = .boldSystemFont(ofSize: 14)
-        return label
-    }()
-    
-    private lazy var modelCarLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
-        label.text = "AUDI"
-        label.font = .boldSystemFont(ofSize: 14)
-        return label
-    }()
-    
-    private lazy var submodelCarLabel: UILabel = {
-       let label = UILabel()
-        label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        label.text = "Q7"
-        label.font = .boldSystemFont(ofSize: 15)
-        return label
+
+    lazy var carsTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.backgroundColor = UIColor.clear
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(switchToTheCarsScreen))
+        tableView.addGestureRecognizer(tapGesture)
+        return tableView
     }()
     
     private lazy var whiteTopConstraint = whiteCar.topAnchor.constraint(equalTo: self.topAnchor, constant: 42)
@@ -112,7 +84,7 @@ final class HomeUIView: UIView {
     }
     
     private func addSubviews() {
-        [backColorScreen, brandsLabel, brandsCollectionView, whiteCar, hotLabel, viewAll, conteinerForCar, mainCar, priceLabel, modelCarLabel, submodelCarLabel].forEach{ subview in addSubview(subview) }
+        [backColorScreen, brandsLabel, brandsCollectionView, whiteCar, hotLabel, viewAll, carsTableView].forEach{ subview in addSubview(subview) }
     }
     
     private func preconfigureSubviews() {
@@ -122,37 +94,10 @@ final class HomeUIView: UIView {
     private func setupConstraints() {
         
         NSLayoutConstraint.activate([
-            submodelCarLabel.topAnchor.constraint(equalTo: conteinerForCar.topAnchor, constant: 40),
-            submodelCarLabel.leadingAnchor.constraint(equalTo: conteinerForCar.leadingAnchor, constant: 9),
-            submodelCarLabel.heightAnchor.constraint(equalToConstant: 23),
-            submodelCarLabel.widthAnchor.constraint(equalToConstant: 70)
-        ])
-        
-        NSLayoutConstraint.activate([
-            modelCarLabel.topAnchor.constraint(equalTo: conteinerForCar.topAnchor, constant: 13),
-            modelCarLabel.leadingAnchor.constraint(equalTo: conteinerForCar.leadingAnchor, constant: 9),
-            modelCarLabel.heightAnchor.constraint(equalToConstant: 21),
-            modelCarLabel.widthAnchor.constraint(equalToConstant: 50)
-        ])
-        
-        NSLayoutConstraint.activate([
-            priceLabel.topAnchor.constraint(equalTo: conteinerForCar.topAnchor, constant: 13),
-            priceLabel.leadingAnchor.constraint(equalTo: conteinerForCar.leadingAnchor, constant: 265),
-            priceLabel.trailingAnchor.constraint(equalTo: conteinerForCar.trailingAnchor, constant: -9),
-            priceLabel.heightAnchor.constraint(equalToConstant: 21),
-        ])
-        
-        NSLayoutConstraint.activate([
-            mainCar.topAnchor.constraint(equalTo: conteinerForCar.topAnchor, constant: 20),
-            mainCar.leadingAnchor.constraint(equalTo: conteinerForCar.leadingAnchor, constant: 20),
-            mainCar.heightAnchor.constraint(equalToConstant: 170)
-        ])
-        
-        NSLayoutConstraint.activate([
-            conteinerForCar.topAnchor.constraint(equalTo: brandsCollectionView.bottomAnchor, constant: 110),
-            conteinerForCar.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
-            conteinerForCar.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
-            conteinerForCar.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100)
+            carsTableView.topAnchor.constraint(equalTo: brandsCollectionView.bottomAnchor, constant: 110),
+            carsTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
+            carsTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
+            carsTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100)
         ])
         
         NSLayoutConstraint.activate([
@@ -166,7 +111,7 @@ final class HomeUIView: UIView {
             hotLabel.topAnchor.constraint(equalTo: brandsCollectionView.bottomAnchor, constant: 70),
             hotLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
             hotLabel.heightAnchor.constraint(equalToConstant: 30),
-            hotLabel.widthAnchor.constraint(equalToConstant: 100)
+            hotLabel.widthAnchor.constraint(equalToConstant: 150)
         ])
         
         NSLayoutConstraint.activate([
@@ -230,12 +175,8 @@ final class HomeUIView: UIView {
         }
     }
     
-    @objc private func viewAllButtonDidTap() {
-        delegateHome?.viewAllButtonTapped(viewAll)
-    }
-    
-    @objc private func conteinerForCarDidTap() {
-        delegateHome?.containerForCarViewTapped(conteinerForCar)
+    @objc private func switchToTheCarsScreen() {
+        delegateHome?.switchingToTheCarScreenTapped()
     }
     
 }

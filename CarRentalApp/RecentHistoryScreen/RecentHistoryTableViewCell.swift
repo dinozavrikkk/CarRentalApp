@@ -39,7 +39,7 @@ final class RecentHistoryTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var dollarLabel: UILabel = {
+    private let dollarLabel: UILabel = {
        let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
@@ -48,13 +48,22 @@ final class RecentHistoryTableViewCell: UITableViewCell {
         return label
     }()
     
-    private lazy var priceLabel: UILabel = {
+    private let priceLabel: UILabel = {
        let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
         label.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
         label.text = "100"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    private lazy var priceStackView: UIStackView = {
+        let stack = UIStackView()
+        [dollarLabel, priceLabel].forEach { stack.addArrangedSubview($0) }
+        stack.axis = .horizontal
+        stack.distribution = .fillProportionally
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
     }()
     
     private lazy var daysLabel: UILabel = {
@@ -89,7 +98,7 @@ final class RecentHistoryTableViewCell: UITableViewCell {
     }
     
     private func addSubviews() {
-        [conteiner, containerForImage, modelImage, modelLabel, dollarLabel, priceLabel, daysLabel, dateLabel].forEach{ subview in contentView.addSubview(subview) }
+        [conteiner, containerForImage, modelImage, modelLabel, priceStackView, daysLabel, dateLabel].forEach{ subview in contentView.addSubview(subview) }
     }
     
     private func setupConstraints() {
@@ -101,25 +110,19 @@ final class RecentHistoryTableViewCell: UITableViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            daysLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 6),
+            daysLabel.topAnchor.constraint(equalTo: priceStackView.bottomAnchor, constant: 6),
             daysLabel.leadingAnchor.constraint(equalTo: containerForImage.trailingAnchor, constant: 190),
             daysLabel.heightAnchor.constraint(equalToConstant: 25),
             daysLabel.widthAnchor.constraint(equalToConstant: 55)
         ])
         
         NSLayoutConstraint.activate([
-            priceLabel.topAnchor.constraint(equalTo: conteiner.topAnchor, constant: 15),
-            priceLabel.leadingAnchor.constraint(equalTo: dollarLabel.trailingAnchor, constant: -2),
-            priceLabel.trailingAnchor.constraint(equalTo: conteiner.trailingAnchor, constant: -1),
-            priceLabel.heightAnchor.constraint(equalToConstant: 30)
+            priceStackView.topAnchor.constraint(equalTo: conteiner.topAnchor, constant: 15),
+            priceStackView.leadingAnchor.constraint(equalTo: containerForImage.trailingAnchor, constant: 190),
+            priceStackView.heightAnchor.constraint(equalToConstant: 30),
+            priceStackView.widthAnchor.constraint(equalToConstant: 60)
         ])
-        
-        NSLayoutConstraint.activate([
-            dollarLabel.topAnchor.constraint(equalTo: conteiner.topAnchor, constant: 15),
-            dollarLabel.leadingAnchor.constraint(equalTo: modelLabel.trailingAnchor, constant: 5),
-            dollarLabel.heightAnchor.constraint(equalToConstant: 30)
-        ])
-        
+
         NSLayoutConstraint.activate([
             modelLabel.topAnchor.constraint(equalTo: conteiner.topAnchor, constant: 15),
             modelLabel.leadingAnchor.constraint(equalTo: containerForImage.trailingAnchor, constant: 15),

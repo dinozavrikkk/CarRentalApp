@@ -114,6 +114,7 @@ final class BookingUIView: UIView {
         textView.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         textView.font = .boldSystemFont(ofSize: 16)
         textView.layer.cornerRadius = 20
+        textView.isEditable = false
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()

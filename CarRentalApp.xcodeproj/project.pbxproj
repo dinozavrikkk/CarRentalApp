@@ -37,6 +37,9 @@
 		847B321E2892AAD4002343FE /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847B321D2892AAD4002343FE /* MapView.swift */; };
 		8489C439284E646D00BD5EF3 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489C438284E646D00BD5EF3 /* Service.swift */; };
 		8489C43C284E943700BD5EF3 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489C43B284E943700BD5EF3 /* Model.swift */; };
+		848B32D528986ED300FB579E /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848B32D428986ED300FB579E /* TableViewCell.swift */; };
+		848B32D7289877A300FB579E /* PopularCarsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848B32D6289877A300FB579E /* PopularCarsDataModel.swift */; };
+		848B32D928987A1E00FB579E /* PopularCarsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848B32D828987A1E00FB579E /* PopularCarsDataProvider.swift */; };
 		848FCEB72826FEC80076B623 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848FCEB62826FEC80076B623 /* AppDelegate.swift */; };
 		848FCEB92826FEC80076B623 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848FCEB82826FEC80076B623 /* SceneDelegate.swift */; };
 		848FCEC02826FEC90076B623 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848FCEBF2826FEC90076B623 /* Assets.xcassets */; };
@@ -117,6 +120,9 @@
 		847B321D2892AAD4002343FE /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		8489C438284E646D00BD5EF3 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		8489C43B284E943700BD5EF3 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		848B32D428986ED300FB579E /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		848B32D6289877A300FB579E /* PopularCarsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCarsDataModel.swift; sourceTree = "<group>"; };
+		848B32D828987A1E00FB579E /* PopularCarsDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularCarsDataProvider.swift; sourceTree = "<group>"; };
 		848FCEB32826FEC80076B623 /* CarRentalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarRentalApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		848FCEB62826FEC80076B623 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		848FCEB82826FEC80076B623 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -314,7 +320,10 @@
 				84B24FBC28280B75001B7102 /* HomeUIView.swift */,
 				84B24FBE282810FF001B7102 /* BrandsCollectionViewManager.swift */,
 				84B24FC028281347001B7102 /* BrandsCollectionViewCell.swift */,
+				848B32D428986ED300FB579E /* TableViewCell.swift */,
+				848B32D828987A1E00FB579E /* PopularCarsDataProvider.swift */,
 				84B24FC428284683001B7102 /* BrandDataModel.swift */,
+				848B32D6289877A300FB579E /* PopularCarsDataModel.swift */,
 				844A26D22828D9E600AA3FB3 /* HomeScreenDelegate.swift */,
 			);
 			path = HomeScreen;
@@ -572,14 +581,17 @@
 				84E392E32888B76000216A45 /* Alerts.swift in Sources */,
 				8462CD2E2849041400CE3190 /* HistoryDataProvider.swift in Sources */,
 				848FCEB72826FEC80076B623 /* AppDelegate.swift in Sources */,
+				848B32D528986ED300FB579E /* TableViewCell.swift in Sources */,
 				84AD9FD32895D7B0008E3EE5 /* UINavigationController + Extension.swift in Sources */,
 				84CCE5732894708B006149A6 /* PlacesAnnotation.swift in Sources */,
 				844A26D32828D9E600AA3FB3 /* HomeScreenDelegate.swift in Sources */,
 				844A26D52828DB1800AA3FB3 /* CarsViewController.swift in Sources */,
+				848B32D7289877A300FB579E /* PopularCarsDataModel.swift in Sources */,
 				844A26DC2828E1DB00AA3FB3 /* CarsTableViewManager.swift in Sources */,
 				844EA4352847F27E00B89A1C /* DataModelRecentHistory.swift in Sources */,
 				840C9C67289325D600E7372B /* StartAppFactory.swift in Sources */,
 				843BA73428356504008F9C58 /* CarsDataProvider.swift in Sources */,
+				848B32D928987A1E00FB579E /* PopularCarsDataProvider.swift in Sources */,
 				84B24FBD28280B75001B7102 /* HomeUIView.swift in Sources */,
 				84C229A1282ABB38002C1056 /* RegistrationViewController.swift in Sources */,
 				84E392DD28803E9D00216A45 /* AppDataController.swift in Sources */,
