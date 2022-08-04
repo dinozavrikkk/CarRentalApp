@@ -1,21 +1,19 @@
-//
-//  MapViewController.swift
-//  CarRentalApp
-//
-//  Created by admin on 09.05.2022.
-//
 
 import UIKit
 
-class MapViewController: UIViewController {
+final class MapViewController: UIViewController {
+    
+    private let mapView = MapView()
+    
+    override func loadView() {
+        view = mapView
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        view.backgroundColor = .systemBlue
     }
     
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        Alerts.getMessageAboutCarsAlert()
+    }
 
 }

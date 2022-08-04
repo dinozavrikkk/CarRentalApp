@@ -1,14 +1,9 @@
-//
-//  Extension + String.swift
-//  CarRentalApp
-//
-//  Created by admin on 05.06.2022.
-//
 
 import Foundation
 import UIKit
 
 extension String {
+    
     enum ValidTypes {
         case nickname
         case email
@@ -18,10 +13,7 @@ extension String {
         case cardPass
         case cardData
     }
-    //5555 5555 5555 5555 nomer carti
-    //03/2023 god
-    //333 pass
-    //SABITOV AYAZ
+    
     enum RegEx: String {
         case nickname = "[a-zA-Z0-9]{1,8}"
         case email = "[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,}"
@@ -48,11 +40,6 @@ extension String {
         
         return NSPredicate(format: format, regEx).evaluate(with: self)
     }
+    
 }
 
-extension UIViewController {
-    func pushModule(withViewController viewController: UIViewController, animated: Bool = true, hidesTabBarWhenPushed: Bool = true) {
-        viewController.hidesBottomBarWhenPushed = hidesTabBarWhenPushed
-        navigationController?.pushViewController(viewController, animated: animated)
-    }
-}

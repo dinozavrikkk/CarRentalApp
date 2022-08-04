@@ -1,14 +1,8 @@
-//
-//  CarsDataProvider.swift
-//  CarRentalApp
-//
-//  Created by admin on 18.05.2022.
-//
 
 import Foundation
 import UIKit
 
-class CarsDataProvider {
+final class CarsDataProvider {
     
     private let obtainer: ObteinerForDataModel
     private var dataModel: DataModelCarsInTable

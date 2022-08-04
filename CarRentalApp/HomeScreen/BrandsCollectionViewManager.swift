@@ -1,9 +1,3 @@
-//
-//  BrandsCollectionViewManager.swift
-//  CarRentalApp
-//
-//  Created by admin on 08.05.2022.
-//
 
 import Foundation
 import UIKit
@@ -11,12 +5,11 @@ import UIKit
 final class BrandsCollectionViewManager: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     private let rentalModel: DataModelExample
-    weak var delegateChoosingListCar: ChooseCollectionViewProtocol?
+    weak var delegateChoosingListCar: ChooseCollectionViewDelegate?
     
     init(rentalModel: DataModelExample) {
         self.rentalModel = rentalModel
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         rentalModel.modelsInRental.count

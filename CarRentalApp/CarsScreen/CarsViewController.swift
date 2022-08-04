@@ -1,21 +1,17 @@
-//
-//  CarsViewController.swift
-//  CarRentalApp
-//
-//  Created by admin on 09.05.2022.
-//
 
 import UIKit
 
-class CarsViewController: UIViewController {
+final class CarsViewController: UIViewController {
     
     private let tableManager: CarsTableViewManager
     private let collectionManager: BrandsCollectionViewManager
     private let carsView = CarsUIView()
+    private let userDefaultProvider: UserDefaultProvider
     
-    init(dataProvider: CarsDataProvider, rentalModel: DataModelExample, historyDataProvider: HistoryDataProvider) {
+    init(dataProvider: CarsDataProvider, rentalModel: DataModelExample, historyDataProvider: HistoryDataProvider, userDefaultProvider: UserDefaultProvider) {
         self.tableManager = CarsTableViewManager(dataProvider: dataProvider, historyDataProvider: historyDataProvider)
         self.collectionManager = BrandsCollectionViewManager(rentalModel: rentalModel)
+        self.userDefaultProvider = userDefaultProvider
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -32,6 +28,7 @@ class CarsViewController: UIViewController {
         carsView.brandsCollectionView.dataSource = collectionManager
         tableManager.delegatePushBooking = self
         collectionManager.delegateChoosingListCar = self
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     override func viewDidLoad() {
@@ -42,16 +39,13 @@ class CarsViewController: UIViewController {
         carsView.carsTableView.separatorStyle = .none
         carsView.carsTableView.rowHeight = UITableView.automaticDimension
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButton"), style: .plain, target: self, action: #selector(backButtonTapped))
-    }
-    
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        configureButtons()
     }
 
 }
 
-extension CarsViewController: ChooseCollectionViewProtocol {
+//MARK: ChooseCollectionViewDelegate
+extension CarsViewController: ChooseCollectionViewDelegate {
     
     func updateCellsInTable(dataProvider: CarsDataProvider) {
         tableManager.dataProvider = dataProvider
@@ -63,10 +57,34 @@ extension CarsViewController: ChooseCollectionViewProtocol {
         
 }
 
-extension CarsViewController: PushToBookingProtocol {
+//MARK: PushToBookingDelegate
+extension CarsViewController: PushToBookingDelegate {
    
     func cellDidTap(cars: CarsTable, historyDataProvider: HistoryDataProvider) {
-        let vcBooking = BookingViewController(cars: cars, historyDataProvider: historyDataProvider)
-        navigationController?.pushViewController(vcBooking, animated: true)
-    }    
+        let vcBooking = BookingViewController(cars: cars, historyDataProvider: historyDataProvider, userDefaultProvider: userDefaultProvider)
+        pushModule(withViewController: vcBooking)
+    }
+    
+}
+
+//MARK: UIGestureRecognizerDelegate
+extension CarsViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        true
+    }
+    
+}
+
+//MARK: Click processing, Configure buttons
+private extension CarsViewController {
+    
+    func configureButtons() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButton"), style: .plain, target: self, action: #selector(backButtonTapped))
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+    
 }

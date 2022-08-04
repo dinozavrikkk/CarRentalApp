@@ -1,9 +1,3 @@
-//
-//  CarsTableViewManager.swift
-//  CarRentalApp
-//
-//  Created by admin on 09.05.2022.
-//
 
 import Foundation
 import UIKit
@@ -12,7 +6,7 @@ final class CarsTableViewManager: NSObject, UITableViewDelegate, UITableViewData
     
     var dataProvider: CarsDataProvider
     var historyDataProvider: HistoryDataProvider
-    weak var delegatePushBooking: PushToBookingProtocol?
+    weak var delegatePushBooking: PushToBookingDelegate?
     
     init(dataProvider: CarsDataProvider, historyDataProvider: HistoryDataProvider) {
         self.dataProvider = dataProvider
