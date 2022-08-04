@@ -6,7 +6,7 @@ final class CarsTableViewManager: NSObject, UITableViewDelegate, UITableViewData
     
     var dataProvider: CarsDataProvider
     var historyDataProvider: HistoryDataProvider
-    weak var delegatePushBooking: PushToBookingProtocol?
+    weak var delegatePushBooking: PushToBookingDelegate?
     
     init(dataProvider: CarsDataProvider, historyDataProvider: HistoryDataProvider) {
         self.dataProvider = dataProvider

@@ -5,7 +5,7 @@ import UIKit
 final class BrandsCollectionViewManager: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     private let rentalModel: DataModelExample
-    weak var delegateChoosingListCar: ChooseCollectionViewProtocol?
+    weak var delegateChoosingListCar: ChooseCollectionViewDelegate?
     
     init(rentalModel: DataModelExample) {
         self.rentalModel = rentalModel

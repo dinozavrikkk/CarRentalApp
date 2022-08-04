@@ -14,49 +14,67 @@ struct DriverDatabaseStorage {
             product.surname = surname
             product.number = number
             product.image = imageData
-            try! context.save()
+            try? context.save()
         }
     }
     
-    func driverDatabaseIsEmpty(completion: ((Bool) -> Void)?) {
+    func driverDatabaseIsEmpty(completion: ((Result<Bool, Error>) -> Void)?) {
          context.perform {
             let request = DriverInfo.fetchRequest()
-            let models = try! context.fetch(request)
-            if models.isEmpty {
-                completion?(true)
-            } else {
-                completion?(false)
-            }
+            do {
+                let models = try context.fetch(request)
+                if models.isEmpty {
+                    completion?(.success(true))
+                } else {
+                    completion?(.success(false))
+                }
+             }
+             catch let error {
+                 completion?(.failure(error))
+             }
         }
     }
     
     func editDriverModel(name: String, surname: String, number: String, imageData: Data) {
         context.perform {
             let request = DriverInfo.fetchRequest()
-            let models = try! context.fetch(request)
-            let model = models[0]
-            model.name = name
-            model.surname = surname
-            model.number = number
-            model.image = imageData
-            try! context.save()
+            let models = try? context.fetch(request)
+            let model = models?[0]
+            model?.name = name
+            model?.surname = surname
+            model?.number = number
+            model?.image = imageData
+            try? context.save()
         }
     }
     
-    func fetchDriverModel(completion: ((DriverInfo) -> Void)?) {
+    func fetchDriverModel(completion: ((Result<DriverInfo, Error>) -> Void)?) {
         context.perform {
             let request = DriverInfo.fetchRequest()
-            let models = try! context.fetch(request)
-            let model = models[0]
-            completion?(model)
+            do {
+                let models = try context.fetch(request)
+                if !models.isEmpty {
+                    completion?(.success(models[0]))
+                } else {
+                    print("Database don't have models")
+                }
+            }
+            catch let error {
+                completion?(.failure(error))
+            }
         }
     }
     
-    func fetchAllDriverModels(completion: (([DriverInfo]) -> Void)?) {
+    func fetchAllDriverModels(completion: ((Result<[DriverInfo], Error>) -> Void)?) {
         context.perform {
             let request = DriverInfo.fetchRequest()
-            let models = try! context.fetch(request)
-            completion?(models)
+            do {
+                let models = try context.fetch(request)
+                completion?(.success(models))
+            }
+            catch let error {
+                completion?(.failure(error))
+            }
         }
     }
     

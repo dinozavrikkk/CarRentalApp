@@ -1,7 +1,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
     
     private let loginView = LoginUIView()
     private let dataProvider: CarsDataProvider
@@ -24,6 +24,11 @@ class LoginViewController: UIViewController {
         view = loginView
         loginView.delegateWelcome = self
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        loginView.addTapGestureToHideKeyboard()
+    }
 
     deinit {
         loginView.removeKeyboardNotification()
@@ -31,7 +36,8 @@ class LoginViewController: UIViewController {
     
 }
 
-extension LoginViewController: LoginScreenProtocol {
+//MARK: Extension LoginScreenDelegate
+extension LoginViewController: LoginScreenDelegate {
     
     func signInButtonTapped(_ sender: UIButton) {
         present(RegistrationViewController(), animated: true)
@@ -44,9 +50,9 @@ extension LoginViewController: LoginScreenProtocol {
             Service.shared.authInApp(authData) { [weak self] response in
                 switch response {
                 case .success:
-                    let factory = Factory()
+                    let startAppFactory = StartAppFactory()
                     self?.userDefault.setValue(true, forKey: "isLogin")
-                    self?.navigationController?.pushViewController(factory.startApp(), animated: true)
+                    self?.navigationController?.pushViewController(startAppFactory.startApp(), animated: true)
                     self?.navigationController?.viewControllers.remove(at: .zero)
                 case .error:
                     Alerts.getSignUpErrorAlert()

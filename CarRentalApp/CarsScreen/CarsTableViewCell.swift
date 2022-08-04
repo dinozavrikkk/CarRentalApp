@@ -37,7 +37,7 @@ final class CarsTableViewCell: UITableViewCell {
     private lazy var carImage: UIImageView = {
        let image = UIImageView()
         image.image = UIImage(named: "bmwx5")
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
         return image
     }()
     
@@ -51,7 +51,7 @@ final class CarsTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        self.backgroundColor = .clear
         selectionStyle = .none
         
         addSubviews()

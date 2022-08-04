@@ -2,14 +2,7 @@
 import Foundation
 import UIKit
 
-class DriverView: UIView {
-    
-    private let conteinerForStatusBar: UIView = {
-       let view = UIView()
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+final class DriverView: UIView {
     
     private(set) lazy var userImage: UIImageView = {
        let image = UIImageView()
@@ -66,6 +59,7 @@ class DriverView: UIView {
         field.textColor = .black
         field.font = .systemFont(ofSize: 14)
         field.placeholder = "Enter your name"
+        field.returnKeyType = .done
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
@@ -75,6 +69,7 @@ class DriverView: UIView {
         field.textColor = .black
         field.font = .systemFont(ofSize: 14)
         field.placeholder = "Enter your surname"
+        field.returnKeyType = .done
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
@@ -84,6 +79,7 @@ class DriverView: UIView {
         field.textColor = .black
         field.font = .systemFont(ofSize: 14)
         field.placeholder = "Enter your number"
+        field.returnKeyType = .done
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
@@ -109,7 +105,7 @@ class DriverView: UIView {
         return view
     }()
     
-    weak var delegateSave: ProtocolInfoAboutDriver?
+    weak var delegateSave: InfoAboutDriverDelegate?
     private let driverDatabase = DriverDatabaseStorage()
     private lazy var contentViewHeightConstraint = contentView.heightAnchor.constraint(equalTo: self.heightAnchor)
     private var keyboardIsVisible = false
@@ -133,7 +129,7 @@ class DriverView: UIView {
     }
     
     private func addSubviews() {
-        [conteinerForStatusBar, userImage, editPhotoButton, containerForName, containerForSurname, containerForNumber, nameTextField, surnameTextField, numberTextField, saveChangesButton].forEach{ subview in contentView.addSubview(subview) }
+        [userImage, editPhotoButton, containerForName, containerForSurname, containerForNumber, nameTextField, surnameTextField, numberTextField, saveChangesButton].forEach{ subview in contentView.addSubview(subview) }
     }
     
     private func setupConstraints() {
@@ -144,17 +140,10 @@ class DriverView: UIView {
         ])
 
         NSLayoutConstraint.activate([
-            userImage.topAnchor.constraint(equalTo: conteinerForStatusBar.bottomAnchor, constant: 100),
+            userImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 134),
             userImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             userImage.heightAnchor.constraint(equalToConstant: 150),
             userImage.widthAnchor.constraint(equalToConstant: 150)
-        ])
-
-        NSLayoutConstraint.activate([
-            conteinerForStatusBar.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            conteinerForStatusBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            conteinerForStatusBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            conteinerForStatusBar.heightAnchor.constraint(equalToConstant: 34)
         ])
         
         NSLayoutConstraint.activate([
@@ -266,12 +255,16 @@ class DriverView: UIView {
     }
     
     func updateTextFields() {
-        driverDatabase.fetchDriverModel { [weak self] driverModel in
-            self?.nameTextField.text = driverModel.name
-            self?.surnameTextField.text = driverModel.surname
-            self?.numberTextField.text = driverModel.number
-            guard let savedImage = UIImage(data: (driverModel.image ?? UIImage(named: "emptyPhoto")?.pngData())!) else { return }
-            self?.userImage.image = savedImage
+        driverDatabase.fetchDriverModel { [weak self] result in
+            switch result {
+            case .success(let driverModel):
+                self?.nameTextField.text = driverModel.name
+                self?.surnameTextField.text = driverModel.surname
+                self?.numberTextField.text = driverModel.number
+                guard let savedImage = UIImage(data: (driverModel.image ?? UIImage(named: "emptyPhoto")?.pngData())!) else { return }
+                self?.userImage.image = savedImage
+            case .failure: print("Warning, database don't have any models")
+            }
         }
     }
     
@@ -295,7 +288,7 @@ class DriverView: UIView {
         }
 
         if !keyboardIsVisible {
-            keyboardIsVisible = !keyboardIsVisible
+            keyboardIsVisible.toggle()
             contentViewHeightConstraint.constant += keyboardHeight.height / 2
             UIView.animate(withDuration: duration, delay: .zero, options: UIView.AnimationOptions(rawValue: curve), animations: { self.layoutIfNeeded() }, completion: nil)
         }
@@ -311,7 +304,7 @@ class DriverView: UIView {
         }
         
         if keyboardIsVisible {
-            keyboardIsVisible = !keyboardIsVisible
+            keyboardIsVisible.toggle()
             contentViewHeightConstraint.constant -= keyboardHeight.height / 2
             UIView.animate(withDuration: duration, delay: .zero, options: UIView.AnimationOptions(rawValue: curve), animations: { self.layoutIfNeeded() }, completion: nil)
         }
@@ -329,14 +322,11 @@ class DriverView: UIView {
 
 
 //MARK: UITextFieldDelegate
-
 extension DriverView: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         textField.resignFirstResponder()
         return true
-        
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

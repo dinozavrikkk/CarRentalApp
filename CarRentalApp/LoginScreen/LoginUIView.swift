@@ -71,6 +71,7 @@ final class LoginUIView: UIView {
         field.textColor = .black
         field.font = .systemFont(ofSize: 14)
         field.placeholder = "Email Address"
+        field.returnKeyType = .done
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
@@ -87,7 +88,8 @@ final class LoginUIView: UIView {
         field.textColor = .black
         field.font = .systemFont(ofSize: 14)
         field.placeholder = "Password"
-        field.isSecureTextEntry = true
+//        field.isSecureTextEntry = true
+        field.returnKeyType = .done
         field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
@@ -134,7 +136,7 @@ final class LoginUIView: UIView {
     
     private lazy var contentViewHeightConstraint = contentView.heightAnchor.constraint(equalTo: self.heightAnchor)
     
-    weak var delegateWelcome: LoginScreenProtocol?
+    weak var delegateWelcome: LoginScreenDelegate?
     private var keyboardIsVisible = false
     
     override init(frame: CGRect) {
@@ -279,7 +281,7 @@ final class LoginUIView: UIView {
         }
 
         if !keyboardIsVisible {
-            keyboardIsVisible = !keyboardIsVisible
+            keyboardIsVisible.toggle()
             contentViewHeightConstraint.constant += keyboardHeight.height / 2
             UIView.animate(withDuration: duration, delay: .zero, options: UIView.AnimationOptions(rawValue: curve), animations: { self.layoutIfNeeded() }, completion: nil)
         }
@@ -295,7 +297,7 @@ final class LoginUIView: UIView {
         }
         
         if keyboardIsVisible {
-            keyboardIsVisible = !keyboardIsVisible
+            keyboardIsVisible.toggle()
             contentViewHeightConstraint.constant -= keyboardHeight.height / 2
             UIView.animate(withDuration: duration, delay: .zero, options: UIView.AnimationOptions(rawValue: curve), animations: { self.layoutIfNeeded() }, completion: nil)
         }
@@ -311,6 +313,7 @@ final class LoginUIView: UIView {
 
 }
 
+//MARK: UITextFieldDelegate
 extension LoginUIView: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -26,8 +26,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func startApp() {
 
-        let factory = Factory()
-        let navVC = UINavigationController(rootViewController: factory.startApp())
+        let startAppFactory = StartAppFactory()
+        let navVC = UINavigationController(rootViewController: startAppFactory.startApp())
         
         window?.rootViewController = navVC
         window?.makeKeyAndVisible()
@@ -35,8 +35,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func startLogin() {
 
-        let factory = Factory()
-        let navigationController = UINavigationController(rootViewController: factory.startLogin())
+        let startLoginFactory = StartLoginFactory()
+        let navigationController = UINavigationController(rootViewController: startLoginFactory.startLogin())
         
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

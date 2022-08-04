@@ -1,7 +1,7 @@
 
 import Foundation
 
-protocol ExitingTheApp: AnyObject {
+protocol ExitingTheAppDelegate: AnyObject {
     
     func goOutButtonTapped()
     

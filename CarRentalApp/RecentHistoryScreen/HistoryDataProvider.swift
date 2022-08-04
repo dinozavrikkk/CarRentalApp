@@ -2,9 +2,8 @@
 import Foundation
 import UIKit
 
-class HistoryDataProvider {
+final class HistoryDataProvider {
     
-    private let queue = DispatchQueue(label: "com.PaymentViewController.URLSession", qos: .userInteractive, attributes: .concurrent)
     private let defaults = UserDefaults.standard
     private var dataModelHistory: DataModelHistoryCarsTable
     private let todayDate = Date()
@@ -44,17 +43,4 @@ class HistoryDataProvider {
 //        dataModelHistory.carHistoryTable.insert(contentsOf: .init(carImageFileName: nil, carModel: "\(carInfo.stamp) \(carInfo.model)", carPrice: carInfo.price, carCountDays: "\(carInfo.rentalDays) DAYS", carDate: "\(dateFormatter.string(from: todayDate))"), at: 0)
     }
     
-    func fetchJokee() {
-        queue.async {
-            guard let url = URL(string: "https://v2.jokeapi.dev/joke/Any") else { return }
-            let request = URLRequest(url: url)
-            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                guard let data = data else { return }
-                guard let joke = try? JSONDecoder().decode(Joke.self, from: data) else { return }
-                print("Joke:\n\(joke.setup)\n\(joke.delivery)")
-            }
-            task.resume()
-        }
-    }
-
 }

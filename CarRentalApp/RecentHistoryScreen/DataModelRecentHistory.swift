@@ -2,7 +2,7 @@
 import Foundation
 import UIKit
     
-class CarsTableForHistory: Codable {
+final class CarsTableForHistory: Codable {
     
     var carImageFileName: String?
     var carModel: String?
@@ -19,7 +19,7 @@ class CarsTableForHistory: Codable {
     }
 }
 
-class DataModelHistoryCarsTable: Codable {
+final class DataModelHistoryCarsTable: Codable {
     
     var carHistoryTable: [CarsTableForHistory]
     
