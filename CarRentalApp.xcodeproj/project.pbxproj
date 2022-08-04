@@ -51,7 +51,6 @@
 		849D86F9284CEAA800448214 /* String + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D86F8284CEAA800448214 /* String + Extension.swift */; };
 		849D86FB284E1CBC00448214 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 849D86FA284E1CBC00448214 /* GoogleService-Info.plist */; };
 		84ABD02528529E89004976E4 /* StartLoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84ABD02428529E89004976E4 /* StartLoginFactory.swift */; };
-		84AD9FD32895D7B0008E3EE5 /* UINavigationController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AD9FD22895D7B0008E3EE5 /* UINavigationController + Extension.swift */; };
 		84B24FBD28280B75001B7102 /* HomeUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B24FBC28280B75001B7102 /* HomeUIView.swift */; };
 		84B24FBF282810FF001B7102 /* BrandsCollectionViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B24FBE282810FF001B7102 /* BrandsCollectionViewManager.swift */; };
 		84B24FC128281347001B7102 /* BrandsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B24FC028281347001B7102 /* BrandsCollectionViewCell.swift */; };
@@ -136,7 +135,6 @@
 		849D86F8284CEAA800448214 /* String + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Extension.swift"; sourceTree = "<group>"; };
 		849D86FA284E1CBC00448214 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		84ABD02428529E89004976E4 /* StartLoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartLoginFactory.swift; sourceTree = "<group>"; };
-		84AD9FD22895D7B0008E3EE5 /* UINavigationController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Extension.swift"; sourceTree = "<group>"; };
 		84B24FBC28280B75001B7102 /* HomeUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUIView.swift; sourceTree = "<group>"; };
 		84B24FBE282810FF001B7102 /* BrandsCollectionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsCollectionViewManager.swift; sourceTree = "<group>"; };
 		84B24FC028281347001B7102 /* BrandsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandsCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -411,7 +409,6 @@
 				84B69C1B287326B800734A96 /* FileManager + Extension.swift */,
 				84E392E42888BE5600216A45 /* UIApplication + Extension.swift */,
 				847B321B28916997002343FE /* UIView + Extension.swift */,
-				84AD9FD22895D7B0008E3EE5 /* UINavigationController + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -582,7 +579,6 @@
 				8462CD2E2849041400CE3190 /* HistoryDataProvider.swift in Sources */,
 				848FCEB72826FEC80076B623 /* AppDelegate.swift in Sources */,
 				848B32D528986ED300FB579E /* TableViewCell.swift in Sources */,
-				84AD9FD32895D7B0008E3EE5 /* UINavigationController + Extension.swift in Sources */,
 				84CCE5732894708B006149A6 /* PlacesAnnotation.swift in Sources */,
 				844A26D32828D9E600AA3FB3 /* HomeScreenDelegate.swift in Sources */,
 				844A26D52828DB1800AA3FB3 /* CarsViewController.swift in Sources */,

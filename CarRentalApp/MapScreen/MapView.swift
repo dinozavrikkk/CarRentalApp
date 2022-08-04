@@ -7,14 +7,14 @@ import CoreLocation
 final class MapView: UIView {
     
     private let map: MKMapView = {
-       let mv = MKMapView()
+        let mv = MKMapView()
         mv.showsUserLocation = true
         mv.translatesAutoresizingMaskIntoConstraints = false
         return mv
     }()
     
     private lazy var userLocationButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setImage(UIImage(systemName: "paperplane.fill")?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
         button.backgroundColor = .black
         button.layer.cornerRadius = 7
@@ -54,7 +54,7 @@ final class MapView: UIView {
             map.topAnchor.constraint(equalTo: self.topAnchor),
             map.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100)
         ])
-
+        
         NSLayoutConstraint.activate([
             userLocationButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 100),
             userLocationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12),
@@ -70,17 +70,16 @@ final class MapView: UIView {
     }
     
     private func showsTheLocationOfTheUser() {
-        if CLLocationManager.locationServicesEnabled() == true {
-            if locationManager.authorizationStatus == .restricted || locationManager.authorizationStatus == .denied || locationManager.authorizationStatus == .notDetermined {
-                
-                locationManager.requestWhenInUseAuthorization()
-            }
-            locationManager.desiredAccuracy = 1.0
-            locationManager.delegate = self
-            locationManager.startUpdatingLocation()
-        } else {
-            Alerts.getLocationIsDisabledAlert()
+        guard CLLocationManager.locationServicesEnabled() == true else {
+            return Alerts.getLocationIsDisabledAlert()
         }
+        if locationManager.authorizationStatus == .restricted || locationManager.authorizationStatus == .denied || locationManager.authorizationStatus == .notDetermined {
+            
+            locationManager.requestWhenInUseAuthorization()
+        }
+        locationManager.desiredAccuracy = 1.0
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
     }
     
     private func loadInitialData() {
@@ -129,17 +128,17 @@ extension MapView: CLLocationManagerDelegate {
         manager.stopUpdatingLocation()
         render(location)
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         Alerts.getLocationIsDisabledAlert()
         print("Unable to access your current location")
     }
-
+    
 }
 
 //MARK: MKMapViewDelegate
 extension MapView: MKMapViewDelegate {
-  
+    
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let places = view.annotation as? PlacesAnnotation else {
             return

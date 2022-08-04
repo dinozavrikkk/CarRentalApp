@@ -14,7 +14,7 @@ struct DriverDatabaseStorage {
             product.surname = surname
             product.number = number
             product.image = imageData
-            try! context.save()
+            try? context.save()
         }
     }
     
@@ -38,13 +38,13 @@ struct DriverDatabaseStorage {
     func editDriverModel(name: String, surname: String, number: String, imageData: Data) {
         context.perform {
             let request = DriverInfo.fetchRequest()
-            let models = try! context.fetch(request)
-            let model = models[0]
-            model.name = name
-            model.surname = surname
-            model.number = number
-            model.image = imageData
-            try! context.save()
+            let models = try? context.fetch(request)
+            let model = models?[0]
+            model?.name = name
+            model?.surname = surname
+            model?.number = number
+            model?.image = imageData
+            try? context.save()
         }
     }
     
@@ -54,8 +54,7 @@ struct DriverDatabaseStorage {
             do {
                 let models = try context.fetch(request)
                 if !models.isEmpty {
-                    let model = models[0]
-                    completion?(.success(model))
+                    completion?(.success(models[0]))
                 } else {
                     print("Database don't have models")
                 }

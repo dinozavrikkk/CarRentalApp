@@ -55,7 +55,7 @@ final class HomeUIView: UIView {
         return button
     }()
 
-    lazy var carsTableView: UITableView = {
+    private(set) lazy var carsTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = UIColor.clear
         tableView.showsVerticalScrollIndicator = false

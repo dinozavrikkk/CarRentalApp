@@ -71,7 +71,7 @@ extension CarsViewController: PushToBookingDelegate {
 extension CarsViewController: UIGestureRecognizerDelegate {
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
+        true
     }
     
 }

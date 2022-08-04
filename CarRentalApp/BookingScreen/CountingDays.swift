@@ -2,7 +2,7 @@
 import Foundation
 import UIKit
 
-struct CountingDays {
+enum CountingDays {
     
     static func counting(sender: UIButton, counter: inout Int, defaultPrice: inout String, carPrice: String) {
         switch counter {
