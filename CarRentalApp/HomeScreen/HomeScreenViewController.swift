@@ -28,20 +28,12 @@ final class HomeScreenViewController: UIViewController {
     
     override func loadView() {
         view = homeScreen
-        homeScreen.brandsCollectionView.delegate = collectionManager
-        homeScreen.brandsCollectionView.dataSource = collectionManager
-        homeScreen.carsTableView.delegate = self
-        homeScreen.carsTableView.dataSource = self
-        homeScreen.delegateHome = self
-
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        homeScreen.brandsCollectionView.register(BrandsCollectionViewCell.self, forCellWithReuseIdentifier: "BrandsCollectionViewCell")
-        homeScreen.carsTableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
-        homeScreen.carsTableView.separatorStyle = .none
-        homeScreen.carsTableView.rowHeight = UITableView.automaticDimension
+        configureCollectionAndTableViews()
+        homeScreen.delegateHome = self
         configureButtons()
     }
     
@@ -74,8 +66,19 @@ extension HomeScreenViewController: HomeScreenDelegate {
     
 }
 
-//MARK: Configure buttons
+//MARK: Configure buttons and views
 private extension HomeScreenViewController {
+    
+    func configureCollectionAndTableViews() {
+        homeScreen.brandsCollectionView.delegate = collectionManager
+        homeScreen.brandsCollectionView.dataSource = collectionManager
+        homeScreen.carsTableView.delegate = self
+        homeScreen.carsTableView.dataSource = self
+        homeScreen.brandsCollectionView.register(BrandsCollectionViewCell.self, forCellWithReuseIdentifier: "BrandsCollectionViewCell")
+        homeScreen.carsTableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
+        homeScreen.carsTableView.separatorStyle = .none
+        homeScreen.carsTableView.rowHeight = UITableView.automaticDimension
+    }
     
     func configureButtons() {
         tabBarController?.navigationItem.hidesBackButton = true

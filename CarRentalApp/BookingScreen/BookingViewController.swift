@@ -20,21 +20,14 @@ final class BookingViewController: UIViewController {
     }
     
     override func loadView() {
-        
         view = bookingView
-        bookingView.delegateBooking = self
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        bookingView.totalPriceLabel.text = cars.price
-        bookingView.bigImageCar.image = cars.carPhoto
-        bookingView.carModelLabel.text = cars.stamp + " " + cars.model
-        bookingView.pricePerDayLabel.text = "$\(cars.price) per day"
-        bookingView.infoAboutCarTextView.text = cars.infoAboutCar
- 
+        bookingView.delegateBooking = self
+        configureViews()
         configureButtons()
     }
 }
@@ -64,11 +57,21 @@ extension BookingViewController: UIGestureRecognizerDelegate {
     
 }
 
-//MARK: Click processing, Configure buttons
+//MARK: Click processing, Configure buttons and views
 private extension BookingViewController {
+    
+    func configureViews() {
+        bookingView.totalPriceLabel.text = cars.price
+        bookingView.bigImageCar.image = cars.carPhoto
+        bookingView.carModelLabel.text = cars.stamp + " " + cars.model
+        bookingView.pricePerDayLabel.text = "$\(cars.price) per day"
+        bookingView.infoAboutCarTextView.text = cars.infoAboutCar
+
+    }
     
     func configureButtons() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButton"), style: .plain, target: self, action: #selector(backButtonTapped))
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     @objc private func backButtonTapped() {

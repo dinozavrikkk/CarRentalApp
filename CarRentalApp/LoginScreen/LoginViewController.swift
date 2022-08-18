@@ -7,12 +7,14 @@ final class LoginViewController: UIViewController {
     private let dataProvider: CarsDataProvider
     private let rentalModel: DataModelExample
     private let historyDataProvider: HistoryDataProvider
+    private let service: ServiceProtocol
     private let userDefault = UserDefaults.standard
     
-    init(dataProvider: CarsDataProvider, rentalModel: DataModelExample, historyDataProvider: HistoryDataProvider) {
+    init(dataProvider: CarsDataProvider, rentalModel: DataModelExample, historyDataProvider: HistoryDataProvider, service: ServiceProtocol = Service.shared) {
         self.dataProvider = dataProvider
         self.rentalModel = rentalModel
         self.historyDataProvider = historyDataProvider
+        self.service = service
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -22,11 +24,11 @@ final class LoginViewController: UIViewController {
     
     override func loadView() {
         view = loginView
-        loginView.delegateWelcome = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loginView.delegateWelcome = self
         loginView.addTapGestureToHideKeyboard()
     }
 
@@ -47,7 +49,7 @@ extension LoginViewController: LoginScreenDelegate {
         if !emailField.text!.isEmpty && !passField.text!.isEmpty {
             let authData = RegisterField(email: emailField.text!, password: passField.text!)
             
-            Service.shared.authInApp(authData) { [weak self] response in
+            service.authInApp(authData) { [weak self] response in
                 switch response {
                 case .success:
                     let startAppFactory = StartAppFactory()

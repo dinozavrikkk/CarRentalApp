@@ -83,6 +83,7 @@
 		84E392E32888B76000216A45 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E392E22888B76000216A45 /* Alerts.swift */; };
 		84E392E52888BE5600216A45 /* UIApplication + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E392E42888BE5600216A45 /* UIApplication + Extension.swift */; };
 		84E706D82857DD3B00763E3D /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E706D72857DD3B00763E3D /* UIViewController + Extension.swift */; };
+		84F74DE028AE03E3006253DE /* ServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F74DDF28AE03E3006253DE /* ServiceProtocol.swift */; };
 		F1EA16499CA441D9B1F6AA14 /* Pods_CarRentalApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FA80FADFB172469C9E9258D /* Pods_CarRentalApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -167,6 +168,7 @@
 		84E392E22888B76000216A45 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		84E392E42888BE5600216A45 /* UIApplication + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication + Extension.swift"; sourceTree = "<group>"; };
 		84E706D72857DD3B00763E3D /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
+		84F74DDF28AE03E3006253DE /* ServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProtocol.swift; sourceTree = "<group>"; };
 		A45C7EF2E3345425FD1C5871 /* Pods-CarRentalApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CarRentalApp.release.xcconfig"; path = "Target Support Files/Pods-CarRentalApp/Pods-CarRentalApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -307,6 +309,7 @@
 				848FCECA2827022D0076B623 /* LoginViewController.swift */,
 				848FCECC282702680076B623 /* LoginUIView.swift */,
 				848FCECF2827273B0076B623 /* LoginScreenDelegate.swift */,
+				84F74DDF28AE03E3006253DE /* ServiceProtocol.swift */,
 			);
 			path = LoginScreen;
 			sourceTree = "<group>";
@@ -595,6 +598,7 @@
 				84E392DF2880425000216A45 /* DriverDatabaseStorage.swift in Sources */,
 				84B69C1C287326B800734A96 /* FileManager + Extension.swift in Sources */,
 				84CF1BD6282EDD1F0033FAFD /* BookingUIView.swift in Sources */,
+				84F74DE028AE03E3006253DE /* ServiceProtocol.swift in Sources */,
 				849D86F9284CEAA800448214 /* String + Extension.swift in Sources */,
 				844EA4312847A9AF00B89A1C /* RecentHistoryUIView.swift in Sources */,
 				848FCEB92826FEC80076B623 /* SceneDelegate.swift in Sources */,

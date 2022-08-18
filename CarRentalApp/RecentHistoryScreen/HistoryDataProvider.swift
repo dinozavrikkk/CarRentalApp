@@ -40,7 +40,6 @@ final class HistoryDataProvider {
             let dataModelHistoryCarsTable = DataModelHistoryCarsTable(carHistoryTable: dataModelHistory.carHistoryTable)
             UserDefaultsManager.saveUserData(userData: dataModelHistoryCarsTable)
         }
-//        dataModelHistory.carHistoryTable.insert(contentsOf: .init(carImageFileName: nil, carModel: "\(carInfo.stamp) \(carInfo.model)", carPrice: carInfo.price, carCountDays: "\(carInfo.rentalDays) DAYS", carDate: "\(dateFormatter.string(from: todayDate))"), at: 0)
     }
     
 }
