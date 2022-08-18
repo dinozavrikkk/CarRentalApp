@@ -20,25 +20,12 @@ final class CarsViewController: UIViewController {
     }
     
     override func loadView() {
-        
         view = carsView
-        carsView.carsTableView.delegate = tableManager
-        carsView.carsTableView.dataSource = tableManager
-        carsView.brandsCollectionView.delegate = collectionManager
-        carsView.brandsCollectionView.dataSource = collectionManager
-        tableManager.delegatePushBooking = self
-        collectionManager.delegateChoosingListCar = self
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        carsView.brandsCollectionView.register(BrandsCollectionViewCell.self, forCellWithReuseIdentifier: "BrandsCollectionViewCell")
-        carsView.carsTableView.register(CarsTableViewCell.self, forCellReuseIdentifier: "CarsTableViewCell")
-        carsView.carsTableView.separatorStyle = .none
-        carsView.carsTableView.rowHeight = UITableView.automaticDimension
-        
+        configureCollectionAndTableViews()
         configureButtons()
     }
 
@@ -76,11 +63,25 @@ extension CarsViewController: UIGestureRecognizerDelegate {
     
 }
 
-//MARK: Click processing, Configure buttons
+//MARK: Click processing, Configure buttons and views
 private extension CarsViewController {
+    
+    func configureCollectionAndTableViews() {
+        carsView.carsTableView.delegate = tableManager
+        carsView.carsTableView.dataSource = tableManager
+        carsView.brandsCollectionView.delegate = collectionManager
+        carsView.brandsCollectionView.dataSource = collectionManager
+        tableManager.delegatePushBooking = self
+        collectionManager.delegateChoosingListCar = self
+        carsView.brandsCollectionView.register(BrandsCollectionViewCell.self, forCellWithReuseIdentifier: "BrandsCollectionViewCell")
+        carsView.carsTableView.register(CarsTableViewCell.self, forCellReuseIdentifier: "CarsTableViewCell")
+        carsView.carsTableView.separatorStyle = .none
+        carsView.carsTableView.rowHeight = UITableView.automaticDimension
+    }
     
     func configureButtons() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButton"), style: .plain, target: self, action: #selector(backButtonTapped))
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     @objc private func backButtonTapped() {

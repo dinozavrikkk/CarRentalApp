@@ -18,16 +18,11 @@ final class RecentHistoryViewController: UIViewController {
     
     override func loadView() {
         view = historyView
-        historyView.historyTableView.delegate = self
-        historyView.historyTableView.dataSource = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        historyView.historyTableView.register(RecentHistoryTableViewCell.self, forCellReuseIdentifier: "RecentHistoryTableViewCell")
-        historyView.historyTableView.rowHeight = UITableView.automaticDimension
-        historyView.historyTableView.separatorStyle = .none
+        configureTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,14 +43,24 @@ extension RecentHistoryViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return historyClass?.carHistoryTable.count ?? 0
-//        dataProviderHistory.numberOfRowsInSection()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecentHistoryTableViewCell", for: indexPath) as? RecentHistoryTableViewCell,
               let carsTableForHistory = historyClass?.carHistoryTable[indexPath.row] else { return UITableViewCell() }
         cell.update(dataModelHistory: carsTableForHistory)
-//        cell?.update(dataModelHistory: dataProviderHistory.getCar(for: indexPath))
         return cell
+    }
+}
+
+//MARK: Configure TableView
+private extension RecentHistoryViewController {
+    
+    func configureTableView() {
+        historyView.historyTableView.delegate = self
+        historyView.historyTableView.dataSource = self
+        historyView.historyTableView.register(RecentHistoryTableViewCell.self, forCellReuseIdentifier: "RecentHistoryTableViewCell")
+        historyView.historyTableView.rowHeight = UITableView.automaticDimension
+        historyView.historyTableView.separatorStyle = .none
     }
 }

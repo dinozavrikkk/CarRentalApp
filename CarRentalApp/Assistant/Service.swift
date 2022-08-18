@@ -9,7 +9,14 @@ final class Service {
     
     static let shared = Service()
     
-    func createNewUser(data: RegisterField, complection: @escaping (ResponceCode) -> () ) {
+    private init() { }
+    
+}
+
+//MARK: ServiceProtocol
+extension Service: ServiceProtocol {
+    
+    func createNewUser(data: RegisterField, complection: @escaping (ResponceCode) -> ()) {
         Auth.auth().createUser(withEmail: data.email, password: data.password) { result, error in
             if error == nil {
                 if result != nil {
@@ -26,7 +33,7 @@ final class Service {
         }
     }
     
-    func authInApp(_ data: RegisterField, complection: @escaping (AuthResponce) -> () ) {
+    func authInApp(_ data: RegisterField, complection: @escaping (AuthResponce) -> ()) {
         Auth.auth().signIn(withEmail: data.email, password: data.password) { result, error in
             if error != nil {
                 complection(.error)

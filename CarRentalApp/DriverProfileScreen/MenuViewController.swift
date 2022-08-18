@@ -6,10 +6,12 @@ final class MenuViewController: UIViewController {
     private let menuView = MenuView()
     private var userDefault = UserDefaults.standard
     
+    override func loadView() {
+        view = menuView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view = menuView
-        
         menuView.delegateGoOutButton = self
     }
     

@@ -20,16 +20,13 @@ final class PaymentViewController: UIViewController {
     
     override func loadView() {
         view = paymentView
-        paymentView.delegatePayment = self
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        paymentView.delegatePayment = self
         paymentView.addTapGestureToHideKeyboard()
-        paymentView.totalPriceLabel.text = "Total price: $\(cars.price)"
-
+        configureViews()
         configureButtons()
     }
     
@@ -69,11 +66,16 @@ extension PaymentViewController: UIGestureRecognizerDelegate {
     
 }
 
-//MARK: Click processing, Configure buttons
+//MARK: Click processing, Configure buttons and views
 extension PaymentViewController {
+    
+    func configureViews() {
+        paymentView.totalPriceLabel.text = "Total price: $\(cars.price)"
+    }
     
     func configureButtons() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButtonWhite"), style: .plain, target: self, action: #selector(backButtonTapped))
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     @objc private func backButtonTapped() {
